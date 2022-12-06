@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">975837518429-qi152b6nr4p0p55p4erbosur4l0u31ak.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">975837518429</string>
+    <string name="google_api_key" translatable="false">AIzaSyAFsHYb8ZE_uJrrwUwEYpTHqIqY-agEtTk</string>
+    <string name="google_app_id" translatable="false">1:975837518429:android:a7f94ac8a6f89cf49f0bb4</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAFsHYb8ZE_uJrrwUwEYpTHqIqY-agEtTk</string>
+    <string name="google_storage_bucket" translatable="false">sixvally-ecommerce.appspot.com</string>
+    <string name="project_id" translatable="false">sixvally-ecommerce</string>
+</resources>

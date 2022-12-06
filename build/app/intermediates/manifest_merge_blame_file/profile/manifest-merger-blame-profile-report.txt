@@ -1,0 +1,364 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.rekret.adalu"
+4    android:targetSandboxVersion="1"
+5    android:versionCode="1"
+6    android:versionName="1.0.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="19"
+10        android:targetSdkVersion="30" />
+11    <!--
+12         Flutter needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:10:5-67
+15-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:10:22-64
+16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+16-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:11:5-79
+16-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:11:22-76
+17    <uses-permission android:name="android.permission.WAKE_LOCK" />
+17-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:12:5-68
+17-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:12:22-65
+18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+18-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:13:5-80
+18-->D:\Project\adalu-flutter\android\app\src\main\AndroidManifest.xml:13:22-78
+19    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+19-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:9:5-81
+19-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:9:22-78
+20    <uses-permission android:name="android.permission.VIBRATE" />
+20-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:10:5-66
+20-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:10:22-63
+21    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+21-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:11:5-81
+21-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:11:22-78
+22    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+22-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:26:5-77
+22-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:26:22-74
+23    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+23-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:29:5-82
+23-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:29:22-79
+24
+25    <application
+26        android:name="android.app.Application"
+27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+27-->[androidx.core:core:1.8.0] C:\Users\asus\.gradle\caches\transforms-3\94fe30835d2e64f545b4a93fe31e317d\transformed\core-1.8.0\AndroidManifest.xml:24:18-86
+28        android:debuggable="true"
+29        android:icon="@mipmap/launcher_icon"
+30        android:label="Adalu"
+31        android:networkSecurityConfig="@xml/network_security_config"
+32        android:requestLegacyExternalStorage="true"
+33        android:usesCleartextTraffic="true" >
+34        <activity
+35            android:name="com.rekret.adalu.MainActivity"
+36            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+37            android:hardwareAccelerated="true"
+38            android:launchMode="singleTop"
+39            android:theme="@style/LaunchTheme"
+40            android:windowSoftInputMode="adjustResize" >
+41
+42            <!--
+43                 Specifies an Android theme to apply to this Activity as soon as
+44                 the Android process has started. This theme is visible to the user
+45                 while the Flutter UI initializes. After that, this theme continues
+46                 to determine the Window background behind the Flutter UI.
+47            -->
+48            <meta-data
+49                android:name="io.flutter.embedding.android.NormalTheme"
+50                android:resource="@style/NormalTheme" />
+51            <!--
+52                 Displays an Android View that continues showing the launch screen
+53                 Drawable until Flutter paints its first frame, then this splash
+54                 screen fades out. A splash screen is useful to avoid any visual
+55                 gap between the end of Android's launch screen and the painting of
+56                 Flutter's first frame.
+57            -->
+58            <meta-data
+59                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+60                android:resource="@drawable/launch_background" />
+61
+62            <intent-filter>
+63                <action android:name="android.intent.action.MAIN" />
+64
+65                <category android:name="android.intent.category.LAUNCHER" />
+66            </intent-filter>
+67            <intent-filter>
+68                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+69
+70                <category android:name="android.intent.category.DEFAULT" />
+71            </intent-filter>
+72        </activity>
+73        <!--
+74             Don't delete the meta-data below.
+75             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+76        -->
+77        <meta-data
+78            android:name="flutterEmbedding"
+79            android:value="2" />
+80
+81        <service
+81-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:14:9-17:72
+82            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+82-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:15:13-107
+83            android:exported="false"
+83-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:16:13-37
+84            android:permission="android.permission.BIND_JOB_SERVICE" />
+84-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:17:13-69
+85        <service
+85-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:18:9-24:19
+86            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+86-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:19:13-97
+87            android:exported="false" >
+87-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:20:13-37
+88            <intent-filter>
+88-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:21:13-23:29
+89                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+89-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:22:17-78
+89-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:22:25-75
+90            </intent-filter>
+91        </service>
+92
+93        <receiver
+93-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:26:9-33:20
+94            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+94-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:27:13-98
+95            android:exported="true"
+95-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:28:13-36
+96            android:permission="com.google.android.c2dm.permission.SEND" >
+96-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:29:13-73
+97            <intent-filter>
+97-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:30:13-32:29
+98                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+98-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:31:17-81
+98-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:31:25-78
+99            </intent-filter>
+100        </receiver>
+101
+102        <service
+102-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:35:9-39:19
+103            android:name="com.google.firebase.components.ComponentDiscoveryService"
+103-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:35:18-89
+104            android:directBootAware="true"
+104-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:35:13-43
+105            android:exported="false" >
+105-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:55:13-37
+106            <meta-data
+106-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:36:13-38:85
+107                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+107-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:37:17-128
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:38:17-82
+109            <meta-data
+109-->[:firebase_core] D:\Project\adalu-flutter\build\firebase_core\intermediates\merged_manifest\profile\AndroidManifest.xml:11:13-13:85
+110                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+110-->[:firebase_core] D:\Project\adalu-flutter\build\firebase_core\intermediates\merged_manifest\profile\AndroidManifest.xml:12:17-124
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[:firebase_core] D:\Project\adalu-flutter\build\firebase_core\intermediates\merged_manifest\profile\AndroidManifest.xml:13:17-82
+112            <meta-data
+112-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:56:13-58:85
+113                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+113-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:57:17-119
+114                android:value="com.google.firebase.components.ComponentRegistrar" />
+114-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:58:17-82
+115            <meta-data
+115-->[com.google.firebase:firebase-datatransport:18.1.6] C:\Users\asus\.gradle\caches\transforms-3\76b9f75b93ae22bf02562c3324111d6d\transformed\jetified-firebase-datatransport-18.1.6\AndroidManifest.xml:28:13-30:85
+116                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+116-->[com.google.firebase:firebase-datatransport:18.1.6] C:\Users\asus\.gradle\caches\transforms-3\76b9f75b93ae22bf02562c3324111d6d\transformed\jetified-firebase-datatransport-18.1.6\AndroidManifest.xml:29:17-115
+117                android:value="com.google.firebase.components.ComponentRegistrar" />
+117-->[com.google.firebase:firebase-datatransport:18.1.6] C:\Users\asus\.gradle\caches\transforms-3\76b9f75b93ae22bf02562c3324111d6d\transformed\jetified-firebase-datatransport-18.1.6\AndroidManifest.xml:30:17-82
+118            <meta-data
+118-->[com.google.firebase:firebase-installations:17.0.3] C:\Users\asus\.gradle\caches\transforms-3\26d3880f556780bfbd4450cd0a094868\transformed\jetified-firebase-installations-17.0.3\AndroidManifest.xml:18:13-20:85
+119                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+119-->[com.google.firebase:firebase-installations:17.0.3] C:\Users\asus\.gradle\caches\transforms-3\26d3880f556780bfbd4450cd0a094868\transformed\jetified-firebase-installations-17.0.3\AndroidManifest.xml:19:17-127
+120                android:value="com.google.firebase.components.ComponentRegistrar" />
+120-->[com.google.firebase:firebase-installations:17.0.3] C:\Users\asus\.gradle\caches\transforms-3\26d3880f556780bfbd4450cd0a094868\transformed\jetified-firebase-installations-17.0.3\AndroidManifest.xml:20:17-82
+121        </service>
+122
+123        <provider
+123-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:41:9-45:38
+124            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+124-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:42:13-102
+125            android:authorities="com.rekret.adalu.flutterfirebasemessaginginitprovider"
+125-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:43:13-88
+126            android:exported="false"
+126-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:44:13-37
+127            android:initOrder="99" />
+127-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:45:13-35
+128        <provider
+128-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:10:9-18:20
+129            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+129-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:11:13-82
+130            android:authorities="com.rekret.adalu.flutter.image_provider"
+130-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:12:13-74
+131            android:exported="false"
+131-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:13:13-37
+132            android:grantUriPermissions="true" >
+132-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:14:13-47
+133            <meta-data
+133-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:15:13-17:75
+134                android:name="android.support.FILE_PROVIDER_PATHS"
+134-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:16:17-67
+135                android:resource="@xml/flutter_image_picker_file_paths" />
+135-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:17:17-72
+136        </provider>
+137
+138        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+138-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:14:9-106
+138-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:14:19-103
+139        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" >
+139-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:15:9-22:20
+139-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:15:19-107
+140            <intent-filter>
+140-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:16:13-21:29
+141                <action android:name="android.intent.action.BOOT_COMPLETED" />
+141-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:17:17-79
+141-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:17:25-76
+142                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+142-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:18:17-84
+142-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:18:25-81
+143                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+143-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:19:17-82
+143-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:19:25-79
+144                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+144-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:20:17-82
+144-->[:flutter_local_notifications] D:\Project\adalu-flutter\build\flutter_local_notifications\intermediates\merged_manifest\profile\AndroidManifest.xml:20:25-79
+145            </intent-filter>
+146        </receiver>
+147
+148        <activity
+148-->[:url_launcher_android] D:\Project\adalu-flutter\build\url_launcher_android\intermediates\merged_manifest\profile\AndroidManifest.xml:10:9-13:74
+149            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+149-->[:url_launcher_android] D:\Project\adalu-flutter\build\url_launcher_android\intermediates\merged_manifest\profile\AndroidManifest.xml:11:13-74
+150            android:exported="false"
+150-->[:url_launcher_android] D:\Project\adalu-flutter\build\url_launcher_android\intermediates\merged_manifest\profile\AndroidManifest.xml:12:13-37
+151            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+151-->[:url_launcher_android] D:\Project\adalu-flutter\build\url_launcher_android\intermediates\merged_manifest\profile\AndroidManifest.xml:13:13-71
+152
+153        <provider
+153-->[:share] D:\Project\adalu-flutter\build\share\intermediates\merged_manifest\profile\AndroidManifest.xml:10:9-18:20
+154            android:name="io.flutter.plugins.share.ShareFileProvider"
+154-->[:share] D:\Project\adalu-flutter\build\share\intermediates\merged_manifest\profile\AndroidManifest.xml:11:13-70
+155            android:authorities="com.rekret.adalu.flutter.share_provider"
+155-->[:share] D:\Project\adalu-flutter\build\share\intermediates\merged_manifest\profile\AndroidManifest.xml:12:13-74
+156            android:exported="false"
+156-->[:share] D:\Project\adalu-flutter\build\share\intermediates\merged_manifest\profile\AndroidManifest.xml:13:13-37
+157            android:grantUriPermissions="true" >
+157-->[:share] D:\Project\adalu-flutter\build\share\intermediates\merged_manifest\profile\AndroidManifest.xml:14:13-47
+158            <meta-data
+158-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:15:13-17:75
+159                android:name="android.support.FILE_PROVIDER_PATHS"
+159-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:16:17-67
+160                android:resource="@xml/flutter_share_file_paths" />
+160-->[:image_picker_android] D:\Project\adalu-flutter\build\image_picker_android\intermediates\merged_manifest\profile\AndroidManifest.xml:17:17-72
+161        </provider>
+162
+163        <uses-library
+163-->[androidx.window:window:1.0.0-beta04] C:\Users\asus\.gradle\caches\transforms-3\6bca1986e58db23854cba6516c0e85ae\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+164            android:name="androidx.window.extensions"
+164-->[androidx.window:window:1.0.0-beta04] C:\Users\asus\.gradle\caches\transforms-3\6bca1986e58db23854cba6516c0e85ae\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+165            android:required="false" />
+165-->[androidx.window:window:1.0.0-beta04] C:\Users\asus\.gradle\caches\transforms-3\6bca1986e58db23854cba6516c0e85ae\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+166        <uses-library
+166-->[androidx.window:window:1.0.0-beta04] C:\Users\asus\.gradle\caches\transforms-3\6bca1986e58db23854cba6516c0e85ae\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+167            android:name="androidx.window.sidecar"
+167-->[androidx.window:window:1.0.0-beta04] C:\Users\asus\.gradle\caches\transforms-3\6bca1986e58db23854cba6516c0e85ae\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+168            android:required="false" />
+168-->[androidx.window:window:1.0.0-beta04] C:\Users\asus\.gradle\caches\transforms-3\6bca1986e58db23854cba6516c0e85ae\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+169
+170        <receiver
+170-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:32:9-39:20
+171            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+171-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:33:13-78
+172            android:exported="true"
+172-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:34:13-36
+173            android:permission="com.google.android.c2dm.permission.SEND" >
+173-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:35:13-73
+174            <intent-filter>
+174-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:30:13-32:29
+175                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+175-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:31:17-81
+175-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:31:25-78
+176            </intent-filter>
+177        </receiver>
+178        <!--
+179             FirebaseMessagingService performs security checks at runtime,
+180             but set to not exported to explicitly avoid allowing another app to call it.
+181        -->
+182        <service
+182-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:45:9-52:19
+183            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+183-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:46:13-82
+184            android:directBootAware="true"
+184-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:47:13-43
+185            android:exported="false" >
+185-->[com.google.firebase:firebase-messaging:23.0.8] C:\Users\asus\.gradle\caches\transforms-3\caf9bf06bfb8dfb0661dfaca27c75466\transformed\jetified-firebase-messaging-23.0.8\AndroidManifest.xml:48:13-37
+186            <intent-filter android:priority="-500" >
+186-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:21:13-23:29
+187                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+187-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:22:17-78
+187-->[:firebase_messaging] D:\Project\adalu-flutter\build\firebase_messaging\intermediates\merged_manifest\profile\AndroidManifest.xml:22:25-75
+188            </intent-filter>
+189        </service>
+190
+191        <provider
+191-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:26:9-31:39
+192            android:name="com.google.firebase.provider.FirebaseInitProvider"
+192-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:27:13-77
+193            android:authorities="com.rekret.adalu.firebaseinitprovider"
+193-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:28:13-72
+194            android:directBootAware="true"
+194-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:29:13-43
+195            android:exported="false"
+195-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:30:13-37
+196            android:initOrder="100" />
+196-->[com.google.firebase:firebase-common:20.1.2] C:\Users\asus\.gradle\caches\transforms-3\bac27f7fa4eae0e38f010f1c5829067f\transformed\jetified-firebase-common-20.1.2\AndroidManifest.xml:31:13-36
+197
+198        <activity
+198-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\asus\.gradle\caches\transforms-3\10be127d90ae16f93d2626a23bd8593b\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+199            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+199-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\asus\.gradle\caches\transforms-3\10be127d90ae16f93d2626a23bd8593b\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+200            android:exported="false"
+200-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\asus\.gradle\caches\transforms-3\10be127d90ae16f93d2626a23bd8593b\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+201            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+201-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\asus\.gradle\caches\transforms-3\10be127d90ae16f93d2626a23bd8593b\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+202
+203        <meta-data
+203-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\asus\.gradle\caches\transforms-3\023ea189b124a5ffa99fb7ebbf31c5bd\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+204            android:name="com.google.android.gms.version"
+204-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\asus\.gradle\caches\transforms-3\023ea189b124a5ffa99fb7ebbf31c5bd\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+205            android:value="@integer/google_play_services_version" />
+205-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\asus\.gradle\caches\transforms-3\023ea189b124a5ffa99fb7ebbf31c5bd\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+206
+207        <service
+207-->[com.google.android.datatransport:transport-backend-cct:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\93bee020eab51f88846eda868fed61fe\transformed\jetified-transport-backend-cct-3.1.7\AndroidManifest.xml:29:9-35:19
+208            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+208-->[com.google.android.datatransport:transport-backend-cct:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\93bee020eab51f88846eda868fed61fe\transformed\jetified-transport-backend-cct-3.1.7\AndroidManifest.xml:30:13-103
+209            android:exported="false" >
+209-->[com.google.android.datatransport:transport-backend-cct:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\93bee020eab51f88846eda868fed61fe\transformed\jetified-transport-backend-cct-3.1.7\AndroidManifest.xml:31:13-37
+210            <meta-data
+210-->[com.google.android.datatransport:transport-backend-cct:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\93bee020eab51f88846eda868fed61fe\transformed\jetified-transport-backend-cct-3.1.7\AndroidManifest.xml:32:13-34:39
+211                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+211-->[com.google.android.datatransport:transport-backend-cct:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\93bee020eab51f88846eda868fed61fe\transformed\jetified-transport-backend-cct-3.1.7\AndroidManifest.xml:33:17-94
+212                android:value="cct" />
+212-->[com.google.android.datatransport:transport-backend-cct:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\93bee020eab51f88846eda868fed61fe\transformed\jetified-transport-backend-cct-3.1.7\AndroidManifest.xml:34:17-36
+213        </service>
+214        <service
+214-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:26:9-30:19
+215            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+215-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:27:13-117
+216            android:exported="false"
+216-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:28:13-37
+217            android:permission="android.permission.BIND_JOB_SERVICE" >
+217-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:29:13-69
+218        </service>
+219
+220        <receiver
+220-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:32:9-34:40
+221            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+221-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:33:13-132
+222            android:exported="false" />
+222-->[com.google.android.datatransport:transport-runtime:3.1.7] C:\Users\asus\.gradle\caches\transforms-3\7822831d554d15c1593c06d69b5c9419\transformed\jetified-transport-runtime-3.1.7\AndroidManifest.xml:34:13-37
+223    </application>
+224
+225</manifest>

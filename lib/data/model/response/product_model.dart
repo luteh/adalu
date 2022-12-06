@@ -4,8 +4,12 @@ class ProductModel {
   int _offset;
   List<Product> _products;
 
-  ProductModel(
-      {int totalSize, int limit, int offset, List<Product> products}) {
+  ProductModel({
+    int totalSize,
+    int limit,
+    int offset,
+    List<Product> products,
+  }) {
     this._totalSize = totalSize;
     this._limit = limit;
     this._offset = offset;
@@ -67,34 +71,35 @@ class Product {
   String _updatedAt;
   List<Rating> _rating;
 
-  Product(
-      {int id,
-        String addedBy,
-        int userId,
-        String name,
-        List<CategoryIds> categoryIds,
-        String unit,
-        int minQty,
-        List<String> images,
-        String thumbnail,
-        List<ProductColors> colors,
-        String variantProduct,
-        List<String> attributes,
-        List<ChoiceOptions> choiceOptions,
-        List<Variation> variation,
-        double unitPrice,
-        double purchasePrice,
-        double tax,
-        String taxType,
-        double discount,
-        String discountType,
-        int currentStock,
-        String details,
-        String attachment,
-        String createdAt,
-        String updatedAt,
-        int featuredStatus,
-        List<Rating> rating}) {
+  Product({
+    int id,
+    String addedBy,
+    int userId,
+    String name,
+    List<CategoryIds> categoryIds,
+    String unit,
+    int minQty,
+    List<String> images,
+    String thumbnail,
+    List<ProductColors> colors,
+    String variantProduct,
+    List<String> attributes,
+    List<ChoiceOptions> choiceOptions,
+    List<Variation> variation,
+    double unitPrice,
+    double purchasePrice,
+    double tax,
+    String taxType,
+    double discount,
+    String discountType,
+    int currentStock,
+    String details,
+    String attachment,
+    String createdAt,
+    String updatedAt,
+    int featuredStatus,
+    List<Rating> rating,
+  }) {
     this._id = id;
     this._addedBy = addedBy;
     this._userId = userId;
@@ -150,9 +155,14 @@ class Product {
     double discountPrice = this.unitPrice;
 
     if (this.discount > 0) {
-      discountPrice -= ((discount / 100) * this.unitPrice);
+      if (discountType == 'percent') {
+        discountPrice -= ((discount / 100) * this.unitPrice);
 
-      return discountPrice;
+        return discountPrice;
+      } else {
+        discountPrice -= discount;
+        return discountPrice;
+      }
     }
 
     return discountPrice;
@@ -174,7 +184,7 @@ class Product {
 
   double getPriceWithTax() {
     if (this.tax != null) {
-      return this.unitPrice + (this.unitPrice * (this.tax/100));
+      return this.unitPrice + (this.unitPrice * (this.tax / 100));
     }
 
     return this.unitPrice;
@@ -201,7 +211,7 @@ class Product {
         _colors.add(new ProductColors.fromJson(v));
       });
     }
-    if(json['attributes'] != null) {
+    if (json['attributes'] != null) {
       _attributes = json['attributes'].cast<String>();
     }
     if (json['choice_options'] != null) {
@@ -273,8 +283,6 @@ class Product {
     }
     return data;
   }
-
-
 }
 
 class CategoryIds {

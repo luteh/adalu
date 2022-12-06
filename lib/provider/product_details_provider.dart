@@ -3,17 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/data/model/body/review_body.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/base/api_response.dart';
+import 'package:flutter_rekret_ecommerce/data/model/response/product_detail.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/product_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/response_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/review_model.dart';
 import 'package:flutter_rekret_ecommerce/data/repository/product_details_repo.dart';
 import 'package:flutter_rekret_ecommerce/helper/api_checker.dart';
+import 'package:flutter_rekret_ecommerce/utill/app_constants.dart';
 import 'package:http/http.dart' as http;
 
 class ProductDetailsProvider extends ChangeNotifier {
   final ProductDetailsRepo productDetailsRepo;
   ProductDetailsProvider({@required this.productDetailsRepo});
 
+  ProductDetail _product;
   List<ReviewModel> _reviewList;
   int _imageSliderIndex;
   bool _wish = false;
@@ -28,6 +31,7 @@ class ProductDetailsProvider extends ChangeNotifier {
   String _errorText;
   bool _hasConnection = true;
 
+  ProductDetail get product => _product;
   List<ReviewModel> get reviewList => _reviewList;
   int get imageSliderIndex => _imageSliderIndex;
   bool get isWished => _wish;
@@ -45,17 +49,37 @@ class ProductDetailsProvider extends ChangeNotifier {
   void initProduct(Product product, BuildContext context) async {
     _hasConnection = true;
     _variantIndex = 0;
-    ApiResponse reviewResponse = await productDetailsRepo.getReviews(product.id.toString());
-    if (reviewResponse.response != null && reviewResponse.response.statusCode == 200) {
+    ApiResponse reviewResponse =
+        await productDetailsRepo.getReviews(product.id.toString());
+    if (reviewResponse.response != null &&
+        reviewResponse.response.statusCode == 200) {
       _reviewList = [];
-      reviewResponse.response.data.forEach((reviewModel) => _reviewList.add(ReviewModel.fromJson(reviewModel)));
+      reviewResponse.response.data.forEach(
+          (reviewModel) => _reviewList.add(ReviewModel.fromJson(reviewModel)));
       _imageSliderIndex = 0;
       _quantity = 1;
     } else {
       ApiChecker.checkApi(context, reviewResponse);
-      if(reviewResponse.error.toString() == 'Connection to API server failed due to internet connection') {
+      if (reviewResponse.error.toString() ==
+          'Connection to API server failed due to internet connection') {
         _hasConnection = false;
       }
+    }
+    notifyListeners();
+  }
+
+  void initDetailProduct(context, String productId, languageCode) async {
+    _isLoading = true;
+    ApiResponse apiResponse = await productDetailsRepo.getProduct(
+      productId,
+      languageCode,
+    );
+
+    _isLoading = false;
+    if (apiResponse.response.statusCode == 200) {
+      _product = ProductDetail.fromJson(apiResponse.response.data);
+    } else {
+      ApiChecker.checkApi(context, apiResponse);
     }
     notifyListeners();
   }
@@ -74,7 +98,8 @@ class ProductDetailsProvider extends ChangeNotifier {
 
   void getCount(String productID, BuildContext context) async {
     ApiResponse apiResponse = await productDetailsRepo.getCount(productID);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       _orderCount = apiResponse.response.data['order_count'];
       _wishCount = apiResponse.response.data['wishlist_count'];
     } else {
@@ -84,8 +109,10 @@ class ProductDetailsProvider extends ChangeNotifier {
   }
 
   void getSharableLink(String productID, BuildContext context) async {
-    ApiResponse apiResponse = await productDetailsRepo.getSharableLink(productID);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    ApiResponse apiResponse =
+        await productDetailsRepo.getSharableLink(productID);
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       _sharableLink = apiResponse.response.data;
     } else {
       ApiChecker.checkApi(context, apiResponse);
@@ -135,11 +162,13 @@ class ProductDetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<ResponseModel> submitReview(ReviewBody reviewBody, List<File> files, String token) async {
+  Future<ResponseModel> submitReview(
+      ReviewBody reviewBody, List<File> files, String token) async {
     _isLoading = true;
     notifyListeners();
 
-    http.StreamedResponse response = await productDetailsRepo.submitReview(reviewBody, files, token);
+    http.StreamedResponse response =
+        await productDetailsRepo.submitReview(reviewBody, files, token);
     ResponseModel responseModel;
     if (response.statusCode == 200) {
       _rating = 0;
@@ -148,7 +177,8 @@ class ProductDetailsProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       print('${response.statusCode} ${response.reasonPhrase}');
-      responseModel = ResponseModel('${response.statusCode} ${response.reasonPhrase}', false);
+      responseModel = ResponseModel(
+          '${response.statusCode} ${response.reasonPhrase}', false);
     }
     _isLoading = false;
     notifyListeners();

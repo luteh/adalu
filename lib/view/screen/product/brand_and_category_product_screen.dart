@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/provider/localization_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/product_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/splash_provider.dart';
+import 'package:flutter_rekret_ecommerce/utill/app_constants.dart';
 import 'package:flutter_rekret_ecommerce/utill/color_resources.dart';
 import 'package:flutter_rekret_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
@@ -19,61 +20,104 @@ class BrandAndCategoryProductScreen extends StatelessWidget {
   final String id;
   final String name;
   final String image;
-  BrandAndCategoryProductScreen({@required this.isBrand, @required this.id, @required this.name, this.image});
+  BrandAndCategoryProductScreen({
+    @required this.isBrand,
+    @required this.id,
+    @required this.name,
+    this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProductProvider>(context, listen: false).initBrandOrCategoryProductList(
-      isBrand, id, context, Provider.of<LocalizationProvider>(context, listen: false).locale.languageCode,
+    Provider.of<ProductProvider>(context, listen: false)
+        .initBrandOrCategoryProductList(
+      isBrand,
+      id,
+      context,
+      Provider.of<LocalizationProvider>(context, listen: false)
+          .locale
+          .languageCode,
     );
 
     return Scaffold(
       backgroundColor: ColorResources.getIconBg(context),
       body: Consumer<ProductProvider>(
         builder: (context, productProvider, child) {
-          return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomAppBar(title: name),
 
-            CustomAppBar(title: name),
+                // Brand Details
+                isBrand
+                    ? Container(
+                        height: 100,
+                        padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
+                        margin:
+                            EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+                        color: Theme.of(context).accentColor,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FadeInImage.assetNetwork(
+                              placeholder: Images.placeholder,
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.fill,
+                              image:
+                                  '${AppConstants.BASE_URL_ASSETS}${Provider.of<SplashProvider>(context, listen: false).baseUrls.brandImageUrl}/$image',
+                              imageErrorBuilder: (c, o, s) => Image.asset(
+                                Images.placeholder,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                            Text(
+                              name,
+                              style: titilliumSemiBold.copyWith(
+                                fontSize: Dimensions.FONT_SIZE_LARGE,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox.shrink(),
 
-            // Brand Details
-            isBrand ? Container(
-              height: 100,
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-              margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-              color: Theme.of(context).accentColor,
-              child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                FadeInImage.assetNetwork(
-                  placeholder: Images.placeholder, width: 80, height: 80, fit: BoxFit.fill,
-                  image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.brandImageUrl}/$image',
-                  imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder, width: 80, height: 80, fit: BoxFit.cover),
-                ),
-                SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                Text(name, style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-              ]),
-            ) : SizedBox.shrink(),
+                SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
-            SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-
-            // Products
-            productProvider.brandOrCategoryProductList.length > 0 ? Expanded(
-              child: StaggeredGridView.countBuilder(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-                physics: BouncingScrollPhysics(),
-                crossAxisCount: 2,
-                itemCount: productProvider.brandOrCategoryProductList.length,
-                shrinkWrap: true,
-                staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                itemBuilder: (BuildContext context, int index) {
-                  return ProductWidget(productModel: productProvider.brandOrCategoryProductList[index]);
-                },
-              ),
-            )
-                : Expanded(child: Center(child: productProvider.hasData
-                ? ProductShimmer(isEnabled: Provider.of<ProductProvider>(context).brandOrCategoryProductList.length == 0)
-                : NoInternetOrDataScreen(isNoInternet: false),
-            )),
-
-          ]);
+                // Products
+                productProvider.brandOrCategoryProductList.length > 0
+                    ? Expanded(
+                        child: StaggeredGridView.countBuilder(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.PADDING_SIZE_SMALL),
+                          physics: BouncingScrollPhysics(),
+                          crossAxisCount: 2,
+                          itemCount:
+                              productProvider.brandOrCategoryProductList.length,
+                          shrinkWrap: true,
+                          staggeredTileBuilder: (int index) =>
+                              StaggeredTile.fit(1),
+                          itemBuilder: (BuildContext context, int index) {
+                            return ProductWidget(
+                                productModel: productProvider
+                                    .brandOrCategoryProductList[index]);
+                          },
+                        ),
+                      )
+                    : Expanded(
+                        child: Center(
+                        child: productProvider.hasData
+                            ? ProductShimmer(
+                                isEnabled: Provider.of<ProductProvider>(context)
+                                        .brandOrCategoryProductList
+                                        .length ==
+                                    0)
+                            : NoInternetOrDataScreen(isNoInternet: false),
+                      )),
+              ]);
         },
       ),
     );

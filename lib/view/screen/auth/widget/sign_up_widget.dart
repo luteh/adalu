@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rekret_ecommerce/data/model/body/register_model.dart';
 import 'package:flutter_rekret_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_rekret_ecommerce/provider/auth_provider.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_rekret_ecommerce/view/basewidget/button/custom_button.da
 import 'package:flutter_rekret_ecommerce/view/basewidget/textfield/custom_password_textfield.dart';
 import 'package:flutter_rekret_ecommerce/view/basewidget/textfield/custom_textfield.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/dashboard/dashboard_screen.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class SignUpWidget extends StatefulWidget {
@@ -25,6 +29,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _npwpStrController = TextEditingController();
+  TextEditingController _companyController = TextEditingController();
   GlobalKey<FormState> _formKey;
 
   FocusNode _fNameFocus = FocusNode();
@@ -34,6 +39,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   FocusNode _npwpFocus = FocusNode();
   FocusNode _passwordFocus = FocusNode();
   FocusNode _confirmPasswordFocus = FocusNode();
+  FocusNode _companyFocus = FocusNode();
 
   RegisterModel register = RegisterModel();
   bool isEmailVerified = false;
@@ -49,6 +55,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       String _password = _passwordController.text.trim();
       String _confirmPassword = _confirmPasswordController.text.trim();
       String _npwpStr = _npwpStrController.text.trim();
+      String _company = _companyController.text.trim();
 
       if (_firstName.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -86,6 +93,20 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           content: Text("NPWP is required"),
           backgroundColor: Colors.red,
         ));
+      } else if (_company.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Company is required'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } else if (file == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Npwp is Required'),
+            backgroundColor: Colors.red,
+          ),
+        );
       } else {
         register.fName = '${_firstNameController.text}';
         register.lName = _lastNameController.text ?? " ";
@@ -93,11 +114,41 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         register.phone = _phoneController.text;
         register.password = _passwordController.text;
         register.npwpStr = _npwpStrController.text;
-        await Provider.of<AuthProvider>(context, listen: false)
-            .registration(register, route);
+        register.company = _companyController.text;
+
+        await context.read<AuthProvider>().register(
+              context,
+              register,
+              file,
+              route,
+            );
+
+        // await Provider.of<AuthProvider>(context, listen: false)
+        //     .registration(register, route);
       }
     } else {
       isEmailVerified = false;
+    }
+  }
+
+  File file;
+
+  void chooseFile() async {
+    try {
+      final picketFile = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        maxHeight: 1800,
+        maxWidth: 1800,
+      );
+
+      if (picketFile == null) return;
+
+      setState(() {
+        file = File(picketFile.path);
+        print(file);
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
     }
   }
 
@@ -212,6 +263,64 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ),
 
+              Container(
+                width: double.infinity,
+                height: 200,
+                margin: EdgeInsets.only(
+                  left: Dimensions.MARGIN_SIZE_DEFAULT,
+                  right: Dimensions.MARGIN_SIZE_DEFAULT,
+                  top: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                padding: EdgeInsets.all(Dimensions.MARGIN_SIZE_DEFAULT),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: file != null
+                          ? Container(
+                              child: Image.file(
+                                file,
+                                fit: BoxFit.contain,
+                              ),
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.cloud_upload_outlined,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                                Text(
+                                  'Upload NPWP',
+                                  style: TextStyle(
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                      ),
+                      onPressed: () => chooseFile(),
+                      child: Text('Browser File'),
+                    )
+                  ],
+                ),
+              ),
+
               // for password
               Container(
                 margin: EdgeInsets.only(
@@ -237,6 +346,23 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   hintTxt: getTranslated('RE_ENTER_PASSWORD', context),
                   controller: _confirmPasswordController,
                   focusNode: _confirmPasswordFocus,
+                  nextNode: _companyFocus,
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+
+              // Company
+              Container(
+                margin: EdgeInsets.only(
+                  left: Dimensions.MARGIN_SIZE_DEFAULT,
+                  right: Dimensions.MARGIN_SIZE_DEFAULT,
+                  top: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                child: CustomTextField(
+                  textInputType: TextInputType.text,
+                  hintText: "Enter Company",
+                  focusNode: _companyFocus,
+                  controller: _companyController,
                   textInputAction: TextInputAction.done,
                 ),
               ),

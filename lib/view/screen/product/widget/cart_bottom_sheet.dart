@@ -22,8 +22,11 @@ class CartBottomSheet extends StatelessWidget {
   final Product product;
   final bool isBuy;
   final Function callback;
-  CartBottomSheet(
-      {@required this.product, @required this.isBuy, this.callback});
+  CartBottomSheet({
+    @required this.product,
+    @required this.isBuy,
+    this.callback,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -93,331 +96,347 @@ class CartBottomSheet extends StatelessWidget {
               double priceWithQuantity = priceWithDiscount * details.quantity;
 
               return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Close Button
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).accentColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey[
-                                        Provider.of<ThemeProvider>(context)
-                                                .darkTheme
-                                            ? 700
-                                            : 200],
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                  )
-                                ]),
-                            child: Icon(Icons.clear,
-                                size: Dimensions.ICON_SIZE_SMALL),
-                          ),
-                        )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Close Button
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).accentColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey[
+                                      Provider.of<ThemeProvider>(context)
+                                              .darkTheme
+                                          ? 700
+                                          : 200],
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                )
+                              ]),
+                          child: Icon(Icons.clear,
+                              size: Dimensions.ICON_SIZE_SMALL),
+                        ),
+                      )),
 
-                    // Product details
-                    Row(children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                        decoration: BoxDecoration(
-                          color: ColorResources.getImageBg(context),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: Images.placeholder,
-                          image:
-                              '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productThumbnailUrl}/${product.thumbnail}',
-                          imageErrorBuilder: (c, o, s) =>
-                              Image.asset(Images.placeholder),
-                        ),
+                  // Product details
+                  Row(children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                      decoration: BoxDecoration(
+                        color: ColorResources.getImageBg(context),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(product.name ?? '',
-                                  style: titilliumSemiBold.copyWith(
-                                      fontSize: Dimensions.FONT_SIZE_SMALL),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis),
-                              Text(
-                                PriceConverter.convertPrice(
-                                    context, product.getCalculationUnitPrice()),
-                                style: titilliumBold.copyWith(
-                                    color: ColorResources.getPrimary(context),
-                                    fontSize: 16),
-                              ),
-                              Text(
-                                PriceConverter.convertPrice(
-                                    context, product.getPriceWithTax()),
-                                style: titilliumRegular.copyWith(
-                                    color: Theme.of(context).hintColor,
-                                    decoration: TextDecoration.lineThrough),
-                              ),
-                            ]),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Images.placeholder,
+                        image:
+                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productThumbnailUrl}/${product.thumbnail}',
+                        imageErrorBuilder: (c, o, s) =>
+                            Image.asset(Images.placeholder),
                       ),
-                      Expanded(child: SizedBox.shrink()),
-                      Container(
-                        height: 20,
-                        margin: EdgeInsets.only(
-                            top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2,
-                              color: ColorResources.getPrimary(context)),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Text(
-                          PriceConverter.percentageCalculation(
-                              context,
-                              product.unitPrice,
-                              product.discount,
-                              product.discountType),
-                          style: titilliumRegular.copyWith(
-                              color: Theme.of(context).hintColor,
-                              fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL),
-                        ),
+                    ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(product.name ?? '',
+                                style: titilliumSemiBold.copyWith(
+                                    fontSize: Dimensions.FONT_SIZE_SMALL),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis),
+                            Text(
+                              PriceConverter.convertPrice(
+                                  context, product.getCalculationUnitPrice()),
+                              style: titilliumBold.copyWith(
+                                  color: ColorResources.getPrimary(context),
+                                  fontSize: 16),
+                            ),
+                            Text(
+                              PriceConverter.convertPrice(
+                                  context, product.getPriceWithTax()),
+                              style: titilliumRegular.copyWith(
+                                  color: Theme.of(context).hintColor,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                          ]),
+                    ),
+                    Expanded(child: SizedBox.shrink()),
+                    Container(
+                      height: 20,
+                      margin: EdgeInsets.only(
+                          top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 2,
+                            color: ColorResources.getPrimary(context)),
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    ]),
+                      child: Text(
+                        PriceConverter.percentageCalculation(
+                            context,
+                            product.unitPrice,
+                            product.discount,
+                            product.discountType),
+                        style: titilliumRegular.copyWith(
+                            color: Theme.of(context).hintColor,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL),
+                      ),
+                    ),
+                  ]),
 
-                    // Quantity
-                    Row(children: [
-                      Text(getTranslated('quantity', context),
-                          style: robotoBold),
-                      QuantityButton(
-                          isIncrement: false,
-                          quantity: details.quantity,
-                          stock: _stock),
-                      Text(details.quantity.toString(),
-                          style: titilliumSemiBold),
-                      QuantityButton(
-                          isIncrement: true,
-                          quantity: details.quantity,
-                          stock: _stock),
-                    ]),
+                  // Quantity
+                  Row(children: [
+                    Text(getTranslated('quantity', context), style: robotoBold),
+                    QuantityButton(
+                        isIncrement: false,
+                        quantity: details.quantity,
+                        stock: _stock),
+                    Text(details.quantity.toString(), style: titilliumSemiBold),
+                    QuantityButton(
+                        isIncrement: true,
+                        quantity: details.quantity,
+                        stock: _stock),
+                  ]),
 
-                    // Variant
-                    product.colors.length > 0
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                Text(getTranslated('select_variant', context),
-                                    style: robotoBold),
-                                SizedBox(
-                                  height: 25,
-                                  child: ListView.builder(
-                                    itemCount: product.colors.length,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      String colorString = '0xff' +
-                                          product.colors[index].code
-                                              .substring(1, 7);
-                                      return InkWell(
-                                        onTap: () {
-                                          Provider.of<ProductDetailsProvider>(
-                                                  context,
-                                                  listen: false)
-                                              .setCartVariantIndex(index);
-                                        },
-                                        child: Container(
-                                          height: 25,
-                                          width: 25,
-                                          margin: EdgeInsets.only(
-                                              left: Dimensions
-                                                  .PADDING_SIZE_EXTRA_SMALL),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Color(int.parse(colorString)),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey[
-                                                      Provider.of<ThemeProvider>(
-                                                                  context)
-                                                              .darkTheme
-                                                          ? 700
-                                                          : 200],
-                                                  spreadRadius: 1,
-                                                  blurRadius: 5)
-                                            ],
-                                          ),
-                                          child: details.variantIndex == index
-                                              ? Icon(Icons.done_all,
-                                                  color: ColorResources.WHITE,
-                                                  size: 12)
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ])
-                        : SizedBox(),
-                    product.colors.length > 0
-                        ? SizedBox(height: Dimensions.PADDING_SIZE_SMALL)
-                        : SizedBox(),
-
-                    // Variation
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: product.choiceOptions.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(product.choiceOptions[index].title,
+                  // Variant
+                  product.colors.length > 0
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                              Text(getTranslated('select_variant', context),
                                   style: robotoBold),
                               SizedBox(
-                                  height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                              GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 20,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: (1 / 0.25),
-                                ),
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    product.choiceOptions[index].options.length,
-                                itemBuilder: (context, i) {
-                                  return InkWell(
-                                    onTap: () {
-                                      Provider.of<ProductDetailsProvider>(
-                                              context,
-                                              listen: false)
-                                          .setCartVariationIndex(index, i);
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: Dimensions
-                                              .PADDING_SIZE_EXTRA_SMALL),
-                                      decoration: BoxDecoration(
-                                        color:
-                                            details.variationIndex[index] != i
-                                                ? Theme.of(context).accentColor
-                                                : ColorResources.getPrimary(
-                                                    context),
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: details.variationIndex[index] !=
-                                                i
-                                            ? Border.all(
-                                                color:
-                                                    Theme.of(context).hintColor,
-                                                width: 2)
+                                height: 25,
+                                child: ListView.builder(
+                                  itemCount: product.colors.length,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    String colorString = '0xff' +
+                                        product.colors[index].code
+                                            .substring(1, 7);
+                                    return InkWell(
+                                      onTap: () {
+                                        Provider.of<ProductDetailsProvider>(
+                                                context,
+                                                listen: false)
+                                            .setCartVariantIndex(index);
+                                      },
+                                      child: Container(
+                                        height: 25,
+                                        width: 25,
+                                        margin: EdgeInsets.only(
+                                            left: Dimensions
+                                                .PADDING_SIZE_EXTRA_SMALL),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Color(int.parse(colorString)),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey[
+                                                    Provider.of<ThemeProvider>(
+                                                                context)
+                                                            .darkTheme
+                                                        ? 700
+                                                        : 200],
+                                                spreadRadius: 1,
+                                                blurRadius: 5)
+                                          ],
+                                        ),
+                                        child: details.variantIndex == index
+                                            ? Icon(
+                                                Icons.done_all,
+                                                color: ColorResources.WHITE,
+                                                size: 12,
+                                              )
                                             : null,
                                       ),
-                                      child: Text(
-                                          product
-                                              .choiceOptions[index].options[i],
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: titilliumRegular.copyWith(
-                                            fontSize:
-                                                Dimensions.FONT_SIZE_SMALL,
-                                            color: details.variationIndex[
-                                                        index] !=
-                                                    i
-                                                ? Theme.of(context).hintColor
-                                                : Theme.of(context).accentColor,
-                                          )),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
-                              SizedBox(
-                                  height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                            ]);
-                      },
-                    ),
-                    SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                            ])
+                      : SizedBox(),
+                  product.colors.length > 0
+                      ? SizedBox(height: Dimensions.PADDING_SIZE_SMALL)
+                      : SizedBox(),
 
-                    Row(children: [
-                      Text(getTranslated('total_price', context),
-                          style: robotoBold),
+                  // Variation
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: product.choiceOptions.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.choiceOptions[index].title,
+                            style: robotoBold,
+                          ),
+                          SizedBox(
+                            height: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          ),
+                          GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: (1 / 0.25),
+                            ),
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount:
+                                product.choiceOptions[index].options.length,
+                            itemBuilder: (context, i) {
+                              return InkWell(
+                                onTap: () {
+                                  Provider.of<ProductDetailsProvider>(context,
+                                          listen: false)
+                                      .setCartVariationIndex(index, i);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                  decoration: BoxDecoration(
+                                    color: details.variationIndex[index] != i
+                                        ? Theme.of(context).accentColor
+                                        : ColorResources.getPrimary(context),
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: details.variationIndex[index] != i
+                                        ? Border.all(
+                                            color: Theme.of(context).hintColor,
+                                            width: 2)
+                                        : null,
+                                  ),
+                                  child: Text(
+                                    product.choiceOptions[index].options[i],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: titilliumRegular.copyWith(
+                                      fontSize: Dimensions.FONT_SIZE_SMALL,
+                                      color: details.variationIndex[index] != i
+                                          ? Theme.of(context).hintColor
+                                          : Theme.of(context).accentColor,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),
+                        ],
+                      );
+                    },
+                  ),
+                  SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+
+                  Row(
+                    children: [
+                      Text(
+                        getTranslated('total_price', context),
+                        style: robotoBold,
+                      ),
                       SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                       Text(
-                        PriceConverter.convertPrice(context, priceWithQuantity),
+                        PriceConverter.convertPrice(
+                          context,
+                          priceWithQuantity,
+                        ),
                         style: titilliumBold.copyWith(
                             color: ColorResources.getPrimary(context),
                             fontSize: 16),
                       ),
-                    ]),
-                    SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                    ],
+                  ),
+                  SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
-                    // Cart button
-                    CustomButton(
-                      buttonText: getTranslated(
-                          _stock < 1
-                              ? 'out_of_stock'
-                              : isBuy
-                                  ? 'buy_now'
-                                  : 'add_to_cart',
-                          context),
-                      onTap: _stock < 1
-                          ? null
-                          : () {
-                              if (_stock > 0) {
-                                CartModel _cartModel = CartModel(
-                                  product.id,
-                                  product.thumbnail,
-                                  product.name,
-                                  product.addedBy == 'seller'
-                                      ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel.fName} '
-                                          '${Provider.of<SellerProvider>(context, listen: false).sellerModel.lName}'
-                                      : 'admin',
-                                  price,
-                                  priceWithDiscount,
-                                  details.quantity,
-                                  _stock,
-                                  product.colors.length > 0
-                                      ? product
-                                          .colors[details.variantIndex].name
-                                      : '',
-                                  _variation,
-                                  product.discount,
-                                  product.discountType,
-                                  product.tax,
-                                  product.taxType,
-                                  1,
-                                );
-                                Navigator.pop(context);
-                                if (isBuy) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => CheckoutScreen(
-                                              cartList: [_cartModel],
-                                              fromProductDetails: true)));
-                                } else {
-                                  Provider.of<CartProvider>(context,
-                                          listen: false)
-                                      .addToCart(_cartModel);
-                                  callback();
-                                }
-                              }
-                            },
+                  // Cart button
+                  CustomButton(
+                    buttonText: getTranslated(
+                      _stock < 1
+                          ? 'out_of_stock'
+                          : isBuy
+                              ? 'buy_now'
+                              : 'add_to_cart',
+                      context,
                     ),
-                  ]);
+                    onTap: _stock < 1
+                        ? null
+                        : () {
+                            if (_stock > 0) {
+                              CartModel _cartModel = CartModel(
+                                product.id,
+                                product.thumbnail,
+                                product.name,
+                                product.addedBy == 'seller'
+                                    ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel.fName} '
+                                        '${Provider.of<SellerProvider>(context, listen: false).sellerModel.lName}'
+                                    : 'admin',
+                                price,
+                                priceWithDiscount,
+                                details.quantity,
+                                _stock,
+                                product.colors.length > 0
+                                    ? product.colors[details.variantIndex].name
+                                    : '',
+                                _variation,
+                                product.discount,
+                                product.discountType,
+                                product.tax,
+                                product.taxType,
+                                1,
+                              );
+                              Navigator.pop(context);
+                              if (isBuy) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => CheckoutScreen(
+                                      cartList: [_cartModel],
+                                      fromProductDetails: true,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                // Provider.of<CartProvider>(
+                                //   context,
+                                //   listen: false,
+                                // ).addToCart(_cartModel);
+
+                                context.read<CartProvider>().addCartItem(
+                                      context,
+                                      _cartModel,
+                                      context
+                                          .read<ProductDetailsProvider>()
+                                          .product
+                                          .sellerExtra
+                                          .location,
+                                    );
+                                callback();
+                              }
+                            }
+                          },
+                  ),
+                ],
+              );
             },
           ),
         ),

@@ -41,13 +41,14 @@ class OrderPlaceModel {
     String districtId,
   }) {
     return OrderPlaceModel(
-        customerInfo ?? this._customerInfo,
-        cart ?? this.cart,
-        paymentMethod ?? this.paymentMethod,
-        discount ?? this.discount,
-        courier ?? this.courier,
-        serviceCourier ?? this.serviceCourier,
-        districtId ?? this.districtId);
+      customerInfo ?? this._customerInfo,
+      cart ?? this.cart,
+      paymentMethod ?? this.paymentMethod,
+      discount ?? this.discount,
+      courier ?? this.courier,
+      serviceCourier ?? this.serviceCourier,
+      districtId ?? this.districtId,
+    );
   }
 
   CustomerInfo get customerInfo => _customerInfo;
@@ -150,16 +151,17 @@ class Cart {
   }
 
   Cart(
-      String id,
-      double tax,
-      int quantity,
-      double price,
-      double discount,
-      String discountType,
-      int shippingMethodId,
-      String variant,
-      List<Variation> variation,
-      double shippingCost) {
+    String id,
+    double tax,
+    int quantity,
+    double price,
+    double discount,
+    String discountType,
+    int shippingMethodId,
+    String variant,
+    List<Variation> variation,
+    double shippingCost,
+  ) {
     this._id = id;
     this._tax = tax;
     this._quantity = quantity;

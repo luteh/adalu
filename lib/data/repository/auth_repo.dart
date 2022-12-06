@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,10 +11,45 @@ import 'package:flutter_rekret_ecommerce/data/model/response/base/api_response.d
 import 'package:flutter_rekret_ecommerce/utill/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:http/http.dart' as http;
+
 class AuthRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
   AuthRepo({@required this.dioClient, @required this.sharedPreferences});
+
+  Future<http.StreamedResponse> register(RegisterModel data, File file) async {
+    http.MultipartRequest request = http.MultipartRequest(
+      'POST',
+      Uri.parse('${AppConstants.BASE_URL}${AppConstants.REGISTRATION_URI}'),
+    );
+
+    file != null
+        ? request.files.add(
+            http.MultipartFile(
+              'npwp',
+              file.readAsBytes().asStream(),
+              file.lengthSync(),
+              filename: file.path.split('/').last,
+            ),
+          )
+        : request.fields.addAll(<String, String>{'npwp': data.npwp});
+
+    Map<String, String> _fields = Map();
+    _fields.addAll(<String, String>{
+      'f_name': data.fName,
+      'l_name': data.lName,
+      'phone': data.phone,
+      'email': data.email,
+      'password': data.password,
+      'npwp_str': data.npwpStr,
+      'company': data.company,
+    });
+
+    request.fields.addAll(_fields);
+    http.StreamedResponse response = await request.send();
+    return response;
+  }
 
   Future<ApiResponse> registration(RegisterModel register) async {
     try {
@@ -56,18 +92,18 @@ class AuthRepo {
   Future<String> _getDeviceToken() async {
     String _deviceToken = await FirebaseMessaging.instance.getToken();
     if (_deviceToken != null) {
-      print('--------Device Token---------- '+_deviceToken);
+      print('--------Device Token---------- ' + _deviceToken);
     }
     return _deviceToken;
   }
 
   // for  user token
   Future<void> saveUserToken(String token) async {
-      dioClient.token = token;
-      dioClient.dio.options.headers = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
-      };
+    dioClient.token = token;
+    dioClient.dio.options.headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token'
+    };
 
     try {
       await sharedPreferences.setString(AppConstants.TOKEN, token);
@@ -92,7 +128,6 @@ class AuthRepo {
     FirebaseMessaging.instance.unsubscribeFromTopic(AppConstants.TOPIC);
     return true;
   }
-
 
   // for  Remember Email
   Future<void> saveUserEmailAndPassword(String email, String password) async {
@@ -119,11 +154,11 @@ class AuthRepo {
 
   Future<ApiResponse> forgetPassword(String email) async {
     try {
-      Response response = await dioClient.post(AppConstants.FORGET_PASSWORD_URI, data: {"email": email});
+      Response response = await dioClient
+          .post(AppConstants.FORGET_PASSWORD_URI, data: {"email": email});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
 }

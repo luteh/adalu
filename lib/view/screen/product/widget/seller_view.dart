@@ -35,10 +35,11 @@ class SellerView extends StatelessWidget {
               Expanded(
                 child: InkWell(
                   onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              SellerScreen(seller: seller.sellerModel))),
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SellerScreen(seller: seller.sellerModel),
+                    ),
+                  ),
                   // child: Text(
                   //   seller.sellerModel != null ? '${seller.sellerModel.fName ?? ''} ${seller.sellerModel.lName ?? ''}' : '',
                   //   style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE, color: ColorResources.SELLER_TXT),
@@ -58,10 +59,11 @@ class SellerView extends StatelessWidget {
                     showAnimatedDialog(context, GuestDialog(), isFlip: true);
                   } else if (seller.sellerModel != null) {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                ChatScreen(seller: seller.sellerModel)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ChatScreen(seller: seller.sellerModel),
+                      ),
+                    );
                   }
                 },
                 icon: Image.asset(Images.chat_image,

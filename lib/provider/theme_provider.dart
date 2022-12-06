@@ -18,7 +18,7 @@ class ThemeProvider with ChangeNotifier {
   }
 
   void _loadCurrentTheme() async {
-    _darkTheme = sharedPreferences.getBool(AppConstants.THEME) ?? false;
+    // _darkTheme = sharedPreferences.getBool(AppConstants.THEME) ?? false;
     notifyListeners();
   }
 }

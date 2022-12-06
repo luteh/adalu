@@ -2,6 +2,7 @@ import 'package:flutter_rekret_ecommerce/data/model/response/language_model.dart
 
 class AppConstants {
   static const String BASE_URL = 'https://www.adalu.id/';
+  static const String BASE_URL_ASSETS = 'https://www.adalu.id';
   static const String USER_ID = 'userId';
   static const String NAME = 'name';
   static const String CATEGORIES_URI = 'api/v1/categories';

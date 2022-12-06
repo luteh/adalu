@@ -4,6 +4,7 @@ import 'package:flutter_rekret_ecommerce/provider/product_details_provider.dart'
 import 'package:flutter_rekret_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/wishlist_provider.dart';
+import 'package:flutter_rekret_ecommerce/utill/app_constants.dart';
 import 'package:flutter_rekret_ecommerce/utill/color_resources.dart';
 import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
 import 'package:flutter_rekret_ecommerce/utill/images.dart';
@@ -23,17 +24,31 @@ class ProductImageView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductImageScreen(imageList: productModel.images, title: productModel.name))),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => ProductImageScreen(
+                  imageList: productModel.images, title: productModel.name))),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-              boxShadow: [BoxShadow(color: Colors.grey[Provider.of<ThemeProvider>(context).darkTheme ? 700 : 300], spreadRadius: 1, blurRadius: 5)],
-              gradient: Provider.of<ThemeProvider>(context).darkTheme ? null : LinearGradient(
-                colors: [ColorResources.WHITE, ColorResources.WHITE],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[
+                        Provider.of<ThemeProvider>(context).darkTheme
+                            ? 700
+                            : 300],
+                    spreadRadius: 1,
+                    blurRadius: 5)
+              ],
+              gradient: Provider.of<ThemeProvider>(context).darkTheme
+                  ? null
+                  : LinearGradient(
+                      colors: [ColorResources.WHITE, ColorResources.WHITE],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
             ),
             child: Stack(children: [
               SizedBox(
@@ -45,21 +60,29 @@ class ProductImageView extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 50),
                       child: FadeInImage.assetNetwork(
-                        placeholder: Images.placeholder, height: MediaQuery.of(context).size.width, width: MediaQuery.of(context).size.width,
-                        image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${productModel.images[index]}',
+                        placeholder: Images.placeholder,
+                        height: MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(context).size.width,
+                        image:
+                            '${AppConstants.BASE_URL_ASSETS}${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${productModel.images[index]}',
                         imageErrorBuilder: (c, o, s) => Image.asset(
-                          Images.placeholder, height: MediaQuery.of(context).size.width, width: MediaQuery.of(context).size.width,
+                          Images.placeholder,
+                          height: MediaQuery.of(context).size.width,
+                          width: MediaQuery.of(context).size.width,
                         ),
                       ),
                     );
                   },
                   onPageChanged: (index) {
-                    Provider.of<ProductDetailsProvider>(context, listen: false).setImageSliderSelectedIndex(index);
+                    Provider.of<ProductDetailsProvider>(context, listen: false)
+                        .setImageSliderSelectedIndex(index);
                   },
                 ),
               ),
               Positioned(
-                left: 0, right: 0, bottom: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: Row(
@@ -74,11 +97,12 @@ class ProductImageView extends StatelessWidget {
                 child: FavouriteButton(
                   backgroundColor: ColorResources.getImageBg(context),
                   favColor: ColorResources.getPrimary(context),
-                  isSelected: Provider.of<WishListProvider>(context,listen: false).isWish,
+                  isSelected:
+                      Provider.of<WishListProvider>(context, listen: false)
+                          .isWish,
                   productId: productModel.id,
                 ),
               ),
-
             ]),
           ),
         ),
@@ -95,7 +119,9 @@ class ProductImageView extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  _controller.animateToPage(index, duration: Duration(microseconds: 300), curve: Curves.easeInOut);
+                  _controller.animateToPage(index,
+                      duration: Duration(microseconds: 300),
+                      curve: Curves.easeInOut);
                 },
                 child: Container(
                   width: 60,
@@ -103,15 +129,21 @@ class ProductImageView extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Theme.of(context).accentColor,
-                    border: Provider.of<ProductDetailsProvider>(context).imageSliderIndex == index
-                        ? Border.all(color: ColorResources.getPrimary(context), width: 2) : null,
+                    border: Provider.of<ProductDetailsProvider>(context)
+                                .imageSliderIndex ==
+                            index
+                        ? Border.all(
+                            color: ColorResources.getPrimary(context), width: 2)
+                        : null,
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                     child: FadeInImage.assetNetwork(
                       placeholder: Images.placeholder,
-                      image: '${Provider.of<SplashProvider>(context,listen: false).baseUrls.productImageUrl}/${productModel.images[index]}',
-                      imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder),
+                      image:
+                          '${AppConstants.BASE_URL_ASSETS}${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${productModel.images[index]}',
+                      imageErrorBuilder: (c, o, s) =>
+                          Image.asset(Images.placeholder),
                     ),
                   ),
                 ),
@@ -127,12 +159,14 @@ class ProductImageView extends StatelessWidget {
     List<Widget> indicators = [];
     for (int index = 0; index < productModel.images.length; index++) {
       indicators.add(TabPageSelectorIndicator(
-        backgroundColor: index == Provider.of<ProductDetailsProvider>(context).imageSliderIndex ? Theme.of(context).primaryColor : ColorResources.WHITE,
+        backgroundColor: index ==
+                Provider.of<ProductDetailsProvider>(context).imageSliderIndex
+            ? Theme.of(context).primaryColor
+            : ColorResources.WHITE,
         borderColor: ColorResources.WHITE,
         size: 10,
       ));
     }
     return indicators;
   }
-
 }

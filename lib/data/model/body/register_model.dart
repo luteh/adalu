@@ -5,6 +5,8 @@ class RegisterModel {
   String lName;
   String phone;
   String npwpStr;
+  String npwp;
+  String company;
 
   RegisterModel({
     this.email,
@@ -13,6 +15,8 @@ class RegisterModel {
     this.lName,
     this.phone,
     this.npwpStr,
+    this.npwp,
+    this.company,
   });
 
   RegisterModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +26,8 @@ class RegisterModel {
     lName = json['l_name'];
     phone = json['phone'];
     npwpStr = json['npwp_str'];
+    npwp = json['npwp'];
+    company = json['company'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +38,8 @@ class RegisterModel {
     data['l_name'] = this.lName;
     data['phone'] = this.phone;
     data['npwp_str'] = this.npwpStr;
+    data['npwp'] = this.npwp;
+    data['company'] = this.company;
     return data;
   }
 }

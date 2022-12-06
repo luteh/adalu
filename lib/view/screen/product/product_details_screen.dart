@@ -31,6 +31,15 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<ProductDetailsProvider>(context, listen: false)
+        .initDetailProduct(
+      context,
+      product.id.toString(),
+      Provider.of<LocalizationProvider>(context, listen: false)
+          .locale
+          .languageCode,
+    );
+
+    Provider.of<ProductDetailsProvider>(context, listen: false)
         .removePrevReview();
     Provider.of<ProductDetailsProvider>(context, listen: false)
         .initProduct(product, context);
@@ -57,20 +66,24 @@ class ProductDetails extends StatelessWidget {
         return details.hasConnection
             ? Scaffold(
                 appBar: AppBar(
-                  title: Row(children: [
-                    InkWell(
-                      child: Icon(Icons.arrow_back_ios,
-                          color: Theme.of(context).textTheme.bodyText1.color,
-                          size: 20),
-                      onTap: () => Navigator.pop(context),
-                    ),
-                    SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
-                    Text(getTranslated('product_details', context),
+                  title: Row(
+                    children: [
+                      InkWell(
+                        child: Icon(Icons.arrow_back_ios,
+                            color: Theme.of(context).textTheme.bodyText1.color,
+                            size: 20),
+                        onTap: () => Navigator.pop(context),
+                      ),
+                      SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
+                      Text(
+                        getTranslated('product_details', context),
                         style: robotoRegular.copyWith(
-                            fontSize: 20,
-                            color:
-                                Theme.of(context).textTheme.bodyText1.color)),
-                  ]),
+                          fontSize: 20,
+                          color: Theme.of(context).textTheme.bodyText1.color,
+                        ),
+                      ),
+                    ],
+                  ),
                   automaticallyImplyLeading: false,
                   elevation: 0,
                   backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
@@ -108,37 +121,37 @@ class ProductDetails extends StatelessWidget {
 
                       // Product variant
                       /*Container(
-                  margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  color: ColorResources.WHITE,
-                  child: Column(
-                    children: [
-                      Row(children: [
-                        Expanded(child: Text(Strings.product_variants, style: robotoBold)),
-                        Text(Strings.details, style: titilliumRegular.copyWith(
-                          color: ColorResources.SELLER_TXT,
-                          fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                        )),
-                      ]),
-                      SizedBox(height: 5),
-                      SizedBox(
-                        height: 45,
-                        child: ListView.builder(
-                          itemCount: product.colors.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            String colorString = '0xff' + product.colors[index].substring(1, 7);
-                            return Container(
-                              width: 45,
-                              margin: EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(int.parse(colorString))),
-                            );
-                          },
+                        margin: EdgeInsets.only(top: Dimensions.PADDING_SIZE_SMALL),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        color: ColorResources.WHITE,
+                        child: Column(
+                          children: [
+                            Row(children: [
+                              Expanded(child: Text(Strings.product_variants, style: robotoBold)),
+                              Text(Strings.details, style: titilliumRegular.copyWith(
+                                color: ColorResources.SELLER_TXT,
+                                fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                              )),
+                            ]),
+                            SizedBox(height: 5),
+                            SizedBox(
+                              height: 45,
+                              child: ListView.builder(
+                                itemCount: product.colors.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  String colorString = '0xff' + product.colors[index].substring(1, 7);
+                                  return Container(
+                                    width: 45,
+                                    margin: EdgeInsets.only(right: 10),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(int.parse(colorString))),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),*/
+                      ),*/
 
                       // Reviews
                       Container(
@@ -147,30 +160,35 @@ class ProductDetails extends StatelessWidget {
                         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                         color: Theme.of(context).accentColor,
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TitleRow(
-                                  title: getTranslated('reviews', context) +
-                                      '(${details.reviewList != null ? details.reviewList.length : 0})',
-                                  isDetailsPage: true,
-                                  onTap: () {
-                                    if (details.reviewList != null) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => ReviewScreen(
-                                                  reviewList:
-                                                      details.reviewList)));
-                                    }
-                                  }),
-                              Divider(),
-                              details.reviewList != null
-                                  ? details.reviewList.length != 0
-                                      ? ReviewWidget(
-                                          reviewModel: details.reviewList[0])
-                                      : Center(child: Text('No Review'))
-                                  : ReviewShimmer(),
-                            ]),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TitleRow(
+                              title: getTranslated('reviews', context) +
+                                  '(${details.reviewList != null ? details.reviewList.length : 0})',
+                              isDetailsPage: true,
+                              onTap: () {
+                                if (details.reviewList != null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => ReviewScreen(
+                                        reviewList: details.reviewList,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            Divider(),
+                            details.reviewList != null
+                                ? details.reviewList.length != 0
+                                    ? ReviewWidget(
+                                        reviewModel: details.reviewList[0],
+                                      )
+                                    : Center(child: Text('No Review'))
+                                : ReviewShimmer(),
+                          ],
+                        ),
                       ),
 
                       // Related Products
@@ -196,8 +214,10 @@ class ProductDetails extends StatelessWidget {
               )
             : Scaffold(
                 body: NoInternetOrDataScreen(
-                    isNoInternet: true,
-                    child: ProductDetails(product: product)));
+                  isNoInternet: true,
+                  child: ProductDetails(product: product),
+                ),
+              );
       },
     );
   }

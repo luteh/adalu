@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rekret_ecommerce/data/model/response/cart.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/cart_model.dart';
 import 'package:flutter_rekret_ecommerce/data/repository/cart_repo.dart';
 
@@ -7,127 +8,176 @@ class CartProvider extends ChangeNotifier {
   CartProvider({@required this.cartRepo});
 
   List<CartModel> _cartList = [];
-  List<bool> _isSelectedList = [];
-  double _amount = 0.0;
-  bool _isSelectAll = true;
 
   List<CartModel> get cartList => _cartList;
-  List<bool> get isSelectedList => _isSelectedList;
-  double get amount => _amount;
-  bool get isAllSelect => _isSelectAll;
+
+  List<CartM> cartItem = [];
+  List<CartModel> selectedItem = [];
+  double totalAmount = 0.0;
+  int cartItemLength = 0;
 
   void getCartData() {
-    _cartList.clear();
-    _isSelectedList.clear();
-    _isSelectAll = true;
-    _cartList.addAll(cartRepo.getCartList());
-    _cartList.forEach((cart) {
-      _isSelectedList.add(true);
-      _amount = _amount + (cart.discountedPrice * cart.quantity);
+    cartItem.clear();
+    cartItem.addAll(cartRepo.getCartList());
+    cartItem.forEach((element) {
+      cartItemLength = cartItemLength + element.cartItem.length;
     });
   }
 
-  double getAmountCart() {
-    double amountCart = 0;
-
-    print("getAmountCart");
-
-    cartList.forEach((element) {
-      amountCart += element.getCalculationUnitPrice();
-
-      print(element.tax);
-      print(element.getCalculationUnitPrice());
-    });
-
-    return _amount;
+  bool containSeller(List<CartM> cart, String seller) {
+    return cart.any((e) => e.seller == seller);
   }
 
-  void setQuantity(bool isIncrement, int index) {
-    if (isIncrement) {
-      _cartList[index].quantity = _cartList[index].quantity + 1;
-      _isSelectedList[index]
-          ? _amount = _amount + _cartList[index].discountedPrice
-          : _amount = _amount;
+  void addCartItem(context, CartModel cart, String address) {
+    if (containSeller(cartItem, cart.seller)) {
+      cartItem.any((element) {
+        if (element.seller == cart.seller) {
+          if (element.cartItem.any((item) => item.id == cart.id)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Item is already in the cart'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          } else {
+            cartItemLength = cartItemLength + 1;
+            element.cartItem.add(cart);
+          }
+        }
+        return false;
+      });
     } else {
-      _cartList[index].quantity = _cartList[index].quantity - 1;
-      _isSelectedList[index]
-          ? _amount = _amount - _cartList[index].discountedPrice
-          : _amount = _amount;
+      cartItemLength = cartItemLength + 1;
+
+      cartItem.add(
+        CartM(
+          seller: cart.seller,
+          address: address,
+          cartItem: [cart],
+        ),
+      );
     }
-    cartRepo.addToCartList(_cartList);
+
+    cartRepo.addToCartList(cartItem);
 
     notifyListeners();
   }
 
-  void toggleSelected(int index) {
-    _isSelectedList[index] = !_isSelectedList[index];
+  bool containProduct(List<CartM> cart, CartModel item) {
+    return cart.any((element) => element.cartItem.contains(item));
+  }
 
-    _amount = 0.0;
-    for (int i = 0; i < _isSelectedList.length; i++) {
-      if (_isSelectedList[i]) {
-        _amount =
-            _amount + (_cartList[i].discountedPrice * _cartList[i].quantity);
+  void selectItem(CartModel item) {
+    if (containProduct(cartItem, item)) {
+      if (selectedItem.contains(item)) {
+        selectedItem.remove(item);
+        totalAmount = totalAmount - (item.discountedPrice * item.quantity);
+
+        notifyListeners();
+        return;
       }
+      selectedItem.add(item);
+      totalAmount = totalAmount + (item.discountedPrice * item.quantity);
     }
-
-    _isSelectedList
-        .forEach((isSelect) => isSelect ? null : _isSelectAll = false);
-
     notifyListeners();
   }
 
-  void toggleAllSelect() {
-    _isSelectAll = !_isSelectAll;
+  bool containItem(List<CartModel> cartItem, item) {
+    return cartItem.any((element) => element == item);
+  }
 
-    if (_isSelectAll) {
-      _amount = 0.0;
-      for (int i = 0; i < _isSelectedList.length; i++) {
-        _isSelectedList[i] = true;
-        _amount =
-            _amount + (_cartList[i].discountedPrice * _cartList[i].quantity);
+  void deleteItem(CartModel item) {
+    CartM data;
+    cartItem.forEach(
+      (element) {
+        if (element.cartItem.contains(item)) {
+          data = element;
+          if (selectedItem.contains(item)) {
+            selectedItem.removeWhere((selectedItem) => selectedItem == item);
+            totalAmount = totalAmount - (item.discountedPrice * item.quantity);
+          }
+          element.cartItem.removeWhere((e) => e == item);
+          cartItemLength = cartItemLength - 1;
+        }
+      },
+    );
+    if (data.cartItem.isEmpty) {
+      cartItem.removeWhere((cart) => cart == data);
+    }
+    cartRepo.addToCartList(cartItem);
+    notifyListeners();
+  }
+
+  void incrementQty(CartModel item) {
+    cartItem.forEach(
+      (element) {
+        if (element.cartItem.contains(item)) {
+          var data = element.cartItem.singleWhere((e) => e == item);
+
+          if (data.quantity < data.maxQuantity) {
+            data.quantity += 1;
+            if (selectedItem.contains(data)) {
+              totalAmount = totalAmount + data.discountedPrice;
+            }
+          }
+        }
+      },
+    );
+    cartRepo.addToCartList(cartItem);
+    notifyListeners();
+  }
+
+  void decrementQty(CartModel item) {
+    cartItem.forEach((element) {
+      if (element.cartItem.contains(item)) {
+        var data = element.cartItem.singleWhere((e) => e == item);
+
+        if (data.quantity > 1) {
+          data.quantity -= 1;
+          if (selectedItem.contains(data)) {
+            totalAmount = totalAmount - data.discountedPrice;
+          }
+        }
       }
-    } else {
-      _amount = 0.0;
-      for (int i = 0; i < _isSelectedList.length; i++) {
-        _isSelectedList[i] = false;
-      }
-    }
-
-    notifyListeners();
-  }
-
-  void addToCart(CartModel cartModel) {
-    _cartList.add(cartModel);
-    _isSelectedList.add(true);
-    cartRepo.addToCartList(_cartList);
-    _amount = _amount + (cartModel.discountedPrice * cartModel.quantity);
-    notifyListeners();
-  }
-
-  void removeFromCart(int index) {
-    if (_isSelectedList[index]) {
-      _amount = _amount -
-          (_cartList[index].discountedPrice * _cartList[index].quantity);
-    }
-    _cartList.removeAt(index);
-    _isSelectedList.removeAt(index);
-    cartRepo.addToCartList(_cartList);
-    notifyListeners();
-  }
-
-  bool isAddedInCart(int id) {
-    List<int> idList = [];
-    _cartList.forEach((cartModel) => idList.add(cartModel.id));
-    return idList.contains(id);
-  }
-
-  void removeCheckoutProduct(List<CartModel> carts) {
-    carts.forEach((cart) {
-      _amount = _amount - (cart.discountedPrice * cart.quantity);
-      _cartList.removeWhere((cartModel) => cartModel.id == cart.id);
-      _isSelectedList.removeWhere((selected) => selected);
     });
-    cartRepo.addToCartList(_cartList);
+    cartRepo.addToCartList(cartItem);
     notifyListeners();
+  }
+
+  void removeCheckout() {
+    CartM cartItemData;
+    cartItem.any((element) {
+      cartItemData = element;
+      if (element.seller == selectedItem[0].seller) {
+        selectedItem.forEach((item) {
+          element.cartItem.removeWhere((data) => data.id == item.id);
+        });
+      }
+      print(selectedItem.length);
+      return false;
+    });
+
+    if (cartItemData.cartItem.isEmpty) {
+      cartItem.removeWhere((e) => e == cartItemData);
+    }
+
+    totalAmount = 0;
+
+    cartRepo.addToCartList(cartItem);
+
+    notifyListeners();
+  }
+
+  bool validCheckout() {
+    bool valid;
+    selectedItem.forEach((element) {
+      if (element.seller.contains(selectedItem[0].seller)) {
+        valid = true;
+      } else {
+        valid = false;
+      }
+    });
+
+    return valid;
   }
 }

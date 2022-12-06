@@ -6,6 +6,7 @@ import 'package:flutter_rekret_ecommerce/provider/auth_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/localization_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/product_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/splash_provider.dart';
+import 'package:flutter_rekret_ecommerce/utill/app_constants.dart';
 import 'package:flutter_rekret_ecommerce/utill/color_resources.dart';
 import 'package:flutter_rekret_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
@@ -64,9 +65,10 @@ class SellerScreen extends StatelessWidget {
                       image:
                           '${Provider.of<SplashProvider>(context, listen: false).baseUrls.shopImageUrl}/${seller.shop != null ? seller.shop.image : ''}',
                       imageErrorBuilder: (c, o, s) => Image.asset(
-                          Images.placeholder,
-                          height: 120,
-                          fit: BoxFit.cover),
+                        Images.placeholder,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

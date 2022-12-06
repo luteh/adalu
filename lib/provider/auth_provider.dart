@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/data/model/body/login_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/body/register_model.dart';
@@ -7,6 +10,8 @@ import 'package:flutter_rekret_ecommerce/data/model/response/response_model.dart
 import 'package:flutter_rekret_ecommerce/data/repository/auth_repo.dart';
 import 'package:flutter_rekret_ecommerce/helper/api_checker.dart';
 
+import 'package:http/http.dart' as http;
+
 class AuthProvider with ChangeNotifier {
   final AuthRepo authRepo;
   AuthProvider({@required this.authRepo});
@@ -14,13 +19,12 @@ class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
   bool _isRemember = false;
   int _selectedIndex = 0;
-  int get selectedIndex =>_selectedIndex;
+  int get selectedIndex => _selectedIndex;
 
-  updateSelectedIndex(int index){
+  updateSelectedIndex(int index) {
     _selectedIndex = index;
     notifyListeners();
   }
-
 
   bool get isLoading => _isLoading;
   bool get isRemember => _isRemember;
@@ -30,12 +34,46 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<ResponseModel> register(
+    context,
+    RegisterModel data,
+    File file,
+    Function callback,
+  ) async {
+    _isLoading = true;
+    notifyListeners();
+
+    ResponseModel responseModel;
+    http.StreamedResponse response = await authRepo.register(data, file);
+    // print(response.statusCode)
+    _isLoading = false;
+
+    if (response.statusCode == 200) {
+      Map map = jsonDecode(await response.stream.bytesToString());
+      String message = map['message'];
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.green,
+      ));
+    } else {
+      print('${response.statusCode} | ${response.reasonPhrase}');
+      callback(false, 'Register Failed');
+      responseModel = ResponseModel(
+        '${response.statusCode} | ${response.reasonPhrase}',
+        false,
+      );
+    }
+    notifyListeners();
+    return responseModel;
+  }
+
   Future registration(RegisterModel register, Function callback) async {
     _isLoading = true;
     notifyListeners();
     ApiResponse apiResponse = await authRepo.registration(register);
     _isLoading = false;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       Map map = apiResponse.response.data;
       String token = map["token"];
       authRepo.saveUserToken(token);
@@ -51,8 +89,8 @@ class AuthProvider with ChangeNotifier {
         ErrorResponse errorResponse = apiResponse.error;
         print(errorResponse.errors[0].message);
         errorMessage = errorResponse.errors[0].message;
+        callback(false, errorMessage);
       }
-      callback(false, errorMessage);
       notifyListeners();
     }
   }
@@ -62,7 +100,8 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     ApiResponse apiResponse = await authRepo.login(loginBody);
     _isLoading = false;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       Map map = apiResponse.response.data;
       String token = map["token"];
       authRepo.saveUserToken(token);
@@ -86,8 +125,8 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> updateToken(BuildContext context) async {
     ApiResponse apiResponse = await authRepo.updateToken();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
@@ -119,7 +158,6 @@ class AuthProvider with ChangeNotifier {
     return authRepo.clearUserEmailAndPassword();
   }
 
-
   String getUserPassword() {
     return authRepo.getUserPassword() ?? "";
   }
@@ -131,7 +169,8 @@ class AuthProvider with ChangeNotifier {
     _isLoading = false;
     notifyListeners();
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       responseModel = ResponseModel(apiResponse.response.data["message"], true);
     } else {
       String errorMessage;

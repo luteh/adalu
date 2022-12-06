@@ -36,40 +36,57 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         insuranceAmount: event.insuranceAmount,
       );
     } else if (event is RemoveServiceFeeLoadedEvent) {
-      add(UpdateCheckoutEvent(isLoading: false, serviceFee: null));
+      add(
+        UpdateCheckoutEvent(
+          isLoading: false,
+          serviceFee: null,
+        ),
+      );
     } else if (event is ProcessPaymentEvent) {
       yield* _processPaymentEvent();
     } else if (event is CouponVoucherEvent) {
-      add(UpdateCheckoutEvent(
-        couponVoucher: event.couponVoucher,
-        serviceFee: state.serviceFee,
-        orderPlaceModel:
-            state.orderPlaceModel.copyWith(discount: event.couponVoucher),
-      ));
+      add(
+        UpdateCheckoutEvent(
+          couponVoucher: event.couponVoucher,
+          serviceFee: state.serviceFee,
+          orderPlaceModel: state.orderPlaceModel.copyWith(
+            discount: event.couponVoucher,
+          ),
+        ),
+      );
     } else if (event is InsuranceAmount) {
-      add(UpdateCheckoutEvent(
-        insuranceAmount: event.insuranceAmount,
-        serviceFee: state.serviceFee,
-        orderPlaceModel:
-            state.orderPlaceModel.copyWith(discount: event.insuranceAmount),
-      ));
+      add(
+        UpdateCheckoutEvent(
+          insuranceAmount: event.insuranceAmount,
+          serviceFee: state.serviceFee,
+          orderPlaceModel:
+              state.orderPlaceModel.copyWith(discount: event.insuranceAmount),
+        ),
+      );
     }
   }
 
   Stream<CheckoutState> _processPaymentEvent() async* {
     yield state.copyWith(
-        isPaymentProcess: true,
-        serviceFee: state.serviceFee,
-        orderPlaceModel: state.orderPlaceModel);
+      isPaymentProcess: true,
+      serviceFee: state.serviceFee,
+      orderPlaceModel: state.orderPlaceModel,
+    );
     List<Cart> listCart = [];
     List<Variation> listVariation = [];
-    state.orderPlaceModel.cart.forEach((Cart cart) {
-      cart.variation.forEach((Variation variation) {
-        listVariation.add(variation.copyWith(type: 'Black'));
-      });
+    state.orderPlaceModel.cart.forEach(
+      (Cart cart) {
+        cart.variation.forEach(
+          (Variation variation) {
+            listVariation.add(
+              variation.copyWith(type: 'Black'),
+            );
+          },
+        );
 
-      listCart.add(cart.copyWith(variant: 'Black', variation: listVariation));
-    });
+        listCart.add(cart.copyWith(variant: 'Black', variation: listVariation));
+      },
+    );
 
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['cart'] = listCart.map((v) => v.toJson()).toList();
@@ -80,7 +97,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     data['shipping_name'] =
         "${state.orderPlaceModel.courier.serviceTypeName} - ${state.orderPlaceModel.serviceCourier.serviceDesc}"; //state.orderPlaceModel.serviceCourier.service;
     data['total_shipment_fee'] = state.serviceFee.shipmentNominal.toString();
-    data['insurance'] = "0";
+    data['insurance'] = state.insuranceAmount;
+
+    print('payment data:  $data');
 
     ApiResponse apiResponse = await checkoutRepo.postPaymentProcess(data);
 
@@ -97,13 +116,15 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
           paymentProcess: paymentProcess,
           orderPlaceModel: state.orderPlaceModel));
     } else {
-      add(UpdateCheckoutEvent(
-          isPaymentProcess: false,
-          serviceFee: state.serviceFee,
-          orderPlaceModel: state.orderPlaceModel,
-          isPaymentError: true,
-          messagePaymentError:
-              apiResponse.error.toString() ?? "Failed to proceed order"));
+      add(
+        UpdateCheckoutEvent(
+            isPaymentProcess: false,
+            serviceFee: state.serviceFee,
+            orderPlaceModel: state.orderPlaceModel,
+            isPaymentError: true,
+            messagePaymentError:
+                apiResponse.error.toString() ?? "Failed to proceed order"),
+      );
     }
   }
 
@@ -116,6 +137,8 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     data['courier'] = event.orderPlaceModel.courier.serviceTypeCode;
     data['district'] = event.orderPlaceModel.districtId;
     data['service'] = event.orderPlaceModel.serviceCourier.serviceTypeCode;
+
+    print('data: $data');
 
     ApiResponse apiResponse = await checkoutRepo.postServiceFee(data);
 
@@ -131,9 +154,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     } else {
       yield GetServiceFeeError(
           apiResponse.error.toString() ?? "Failed to calculate total order");
-      add(UpdateCheckoutEvent(
-        isLoading: false,
-      ));
+      add(
+        UpdateCheckoutEvent(
+          isLoading: false,
+        ),
+      );
     }
   }
 }

@@ -21,11 +21,12 @@ class _ShippingPartnerScreenState extends State<ShippingPartnerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocBuilder<ShippingPartnerBloc, ShippingPartnerState>(
-          bloc: widget.shippingPartnerBloc,
-          builder: (context, ShippingPartnerState shippingPartnerState) {
-            print(shippingPartnerState.listCourier);
-            return Column(children: [
+      body: BlocBuilder<ShippingPartnerBloc, ShippingPartnerState>(
+        bloc: widget.shippingPartnerBloc,
+        builder: (context, ShippingPartnerState shippingPartnerState) {
+          print(shippingPartnerState.listCourier);
+          return Column(
+            children: [
               CustomAppBar(title: getTranslated('shipping_partner', context)),
               Expanded(
                 child: Container(
@@ -56,39 +57,41 @@ class _ShippingPartnerScreenState extends State<ShippingPartnerScreen> {
                   ),
                 ),
               )
-            ]);
-          },
-        ),
-        bottomNavigationBar:
-            BlocBuilder<ShippingPartnerBloc, ShippingPartnerState>(
-          bloc: widget.shippingPartnerBloc,
-          builder: (context, ShippingPartnerState shippingPartnerState) {
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Colors.black12)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    spreadRadius: 1,
-                    offset: Offset(2, 0),
-                  )
-                ],
-              ),
-              padding: EdgeInsets.all(10),
-              child: CustomButton(
-                buttonText: getTranslated('select_shipping_partner', context),
-                onTap: (!shippingPartnerState.isLoading &&
-                        shippingPartnerState.courierSelected != null)
-                    ? () {
-                        Navigator.pop(context);
-                        // print("test");
-                      }
-                    : null,
-              ),
-            );
-          },
-        ));
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar:
+          BlocBuilder<ShippingPartnerBloc, ShippingPartnerState>(
+        bloc: widget.shippingPartnerBloc,
+        builder: (context, ShippingPartnerState shippingPartnerState) {
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: Colors.black12)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 6,
+                  spreadRadius: 1,
+                  offset: Offset(2, 0),
+                )
+              ],
+            ),
+            padding: EdgeInsets.all(10),
+            child: CustomButton(
+              buttonText: getTranslated('select_shipping_partner', context),
+              onTap: (!shippingPartnerState.isLoading &&
+                      shippingPartnerState.courierSelected != null)
+                  ? () {
+                      Navigator.pop(context);
+                      // print("test");
+                    }
+                  : null,
+            ),
+          );
+        },
+      ),
+    );
   }
 }

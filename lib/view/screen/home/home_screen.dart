@@ -9,6 +9,7 @@ import 'package:flutter_rekret_ecommerce/provider/category_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/flash_deal_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/localization_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/product_provider.dart';
+import 'package:flutter_rekret_ecommerce/provider/theme_provider.dart';
 import 'package:flutter_rekret_ecommerce/utill/color_resources.dart';
 import 'package:flutter_rekret_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
@@ -71,47 +72,59 @@ class HomePage extends StatelessWidget {
                 centerTitle: false,
                 automaticallyImplyLeading: false,
                 backgroundColor: Theme.of(context).accentColor,
-                title: Image.asset(Images.logo_with_name_image, height: 35),
+                title: Image.asset(
+                  context.read<ThemeProvider>().darkTheme
+                      ? Images.logo_with_with_name
+                      : Images.logo_with_name_image,
+                  height: 35,
+                ),
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => CartScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => CartScreen(),
+                        ),
+                      );
                     },
-                    icon: Stack(clipBehavior: Clip.none, children: [
-                      Image.asset(
-                        Images.cart_arrow_down_image,
-                        height: Dimensions.ICON_SIZE_DEFAULT,
-                        width: Dimensions.ICON_SIZE_DEFAULT,
-                        color: ColorResources.getPrimary(context),
-                      ),
-                      Positioned(
-                        top: -4,
-                        right: -4,
-                        child: CircleAvatar(
-                          radius: 7,
-                          backgroundColor: ColorResources.RED,
-                          child: Text(
+                    icon: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Image.asset(
+                          Images.cart_arrow_down_image,
+                          height: Dimensions.ICON_SIZE_DEFAULT,
+                          width: Dimensions.ICON_SIZE_DEFAULT,
+                          color: ColorResources.getPrimary(context),
+                        ),
+                        Positioned(
+                          top: -4,
+                          right: -4,
+                          child: CircleAvatar(
+                            radius: 7,
+                            backgroundColor: ColorResources.RED,
+                            child: Text(
                               Provider.of<CartProvider>(context)
-                                  .cartList
-                                  .length
+                                  .cartItemLength
                                   .toString(),
                               style: titilliumSemiBold.copyWith(
                                 color: ColorResources.WHITE,
                                 fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                              )),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ]),
+                      ],
+                    ),
                   )
                 ],
               ),
 
               // Search Button
               SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverDelegate(
-                      child: InkWell(
+                pinned: true,
+                delegate: SliverDelegate(
+                  child: InkWell(
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (_) => SearchScreen())),
                     child: Container(
@@ -129,18 +142,26 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(
                               Dimensions.PADDING_SIZE_SMALL),
                         ),
-                        child: Row(children: [
-                          Icon(Icons.search,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.search,
                               color: ColorResources.getPrimary(context),
-                              size: Dimensions.ICON_SIZE_LARGE),
-                          SizedBox(width: 5),
-                          Text(getTranslated('SEARCH_HINT', context),
+                              size: Dimensions.ICON_SIZE_LARGE,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              getTranslated('SEARCH_HINT', context),
                               style: robotoRegular.copyWith(
-                                  color: Theme.of(context).hintColor)),
-                        ]),
+                                  color: Theme.of(context).hintColor),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ))),
+                  ),
+                ),
+              ),
 
               SliverToBoxAdapter(
                 child: Column(
@@ -154,18 +175,22 @@ class HomePage extends StatelessWidget {
                     // Category
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                          Dimensions.PADDING_SIZE_SMALL,
-                          20,
-                          Dimensions.PADDING_SIZE_SMALL,
-                          Dimensions.PADDING_SIZE_SMALL),
+                        Dimensions.PADDING_SIZE_SMALL,
+                        20,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_SMALL,
+                      ),
                       child: TitleRow(
-                          title: getTranslated('CATEGORY', context),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => AllCategoryScreen()));
-                          }),
+                        title: getTranslated('CATEGORY', context),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AllCategoryScreen(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -228,19 +253,24 @@ class HomePage extends StatelessWidget {
                         return megaDeal.flashDeal == null
                             ? Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: Dimensions.PADDING_SIZE_SMALL),
+                                  horizontal: Dimensions.PADDING_SIZE_SMALL,
+                                ),
                                 child: Container(
-                                    height: 150, child: FlashDealsView()),
+                                  height: 150,
+                                  child: FlashDealsView(),
+                                ),
                               )
                             : (megaDeal.flashDeal.id != null &&
                                     megaDeal.flashDealList != null &&
                                     megaDeal.flashDealList.length > 0)
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            Dimensions.PADDING_SIZE_SMALL),
+                                      horizontal: Dimensions.PADDING_SIZE_SMALL,
+                                    ),
                                     child: Container(
-                                        height: 150, child: FlashDealsView()),
+                                      height: 150,
+                                      child: FlashDealsView(),
+                                    ),
                                   )
                                 : SizedBox.shrink();
                       },
@@ -249,23 +279,30 @@ class HomePage extends StatelessWidget {
                     // Brand
                     Padding(
                       padding: EdgeInsets.fromLTRB(
-                          Dimensions.PADDING_SIZE_SMALL,
-                          20,
-                          Dimensions.PADDING_SIZE_SMALL,
-                          Dimensions.PADDING_SIZE_SMALL),
+                        Dimensions.PADDING_SIZE_SMALL,
+                        20,
+                        Dimensions.PADDING_SIZE_SMALL,
+                        Dimensions.PADDING_SIZE_SMALL,
+                      ),
                       child: TitleRow(
-                          title: getTranslated('brand', context),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => AllBrandScreen()));
-                          }),
+                        title: getTranslated('brand', context),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AllBrandScreen(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_SMALL),
-                      child: BrandView(isHomePage: true),
+                        horizontal: Dimensions.PADDING_SIZE_SMALL,
+                      ),
+                      child: BrandView(
+                        isHomePage: true,
+                      ),
                     ),
 
                     // Latest Products

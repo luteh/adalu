@@ -36,14 +36,13 @@ class CustomTextField extends StatelessWidget {
       this.nextNode,
       this.textInputAction,
       this.isPhoneNumber = false,
-      this.isValidator=false,
+      this.isValidator = false,
       this.validatorMessage,
       this.capitalization = TextCapitalization.none,
       this.fillColor,
-      this.readOnly=false,
+      this.readOnly = false,
       this.onTap,
-      this.enable=true
-  });
+      this.enable = true});
 
   @override
   Widget build(context) {
@@ -51,9 +50,17 @@ class CustomTextField extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).accentColor,
-        borderRadius: isPhoneNumber ? BorderRadius.only(topRight: Radius.circular(6), bottomRight: Radius.circular(6)) : BorderRadius.circular(6),
+        borderRadius: isPhoneNumber
+            ? BorderRadius.only(
+                topRight: Radius.circular(6), bottomRight: Radius.circular(6))
+            : BorderRadius.circular(6),
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 3, offset: Offset(0, 1)) // changes position of shadow
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: Offset(0, 1),
+          ) // changes position of shadow
         ],
       ),
       child: TextFormField(
@@ -73,15 +80,18 @@ class CustomTextField extends StatelessWidget {
           FocusScope.of(context).requestFocus(nextNode);
         },
         //autovalidate: true,
-        inputFormatters: [isPhoneNumber ? FilteringTextInputFormatter.digitsOnly : FilteringTextInputFormatter.singleLineFormatter],
-        validator: (input){
-          if(input.isEmpty){
-            if(isValidator){
-              return validatorMessage??"";
+        inputFormatters: [
+          isPhoneNumber
+              ? FilteringTextInputFormatter.digitsOnly
+              : FilteringTextInputFormatter.singleLineFormatter
+        ],
+        validator: (input) {
+          if (input.isEmpty) {
+            if (isValidator) {
+              return validatorMessage ?? "";
             }
           }
           return null;
-
         },
         decoration: InputDecoration(
           hintText: hintText ?? '',
@@ -90,8 +100,10 @@ class CustomTextField extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
           isDense: true,
           counterText: '',
-          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-          hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+          hintStyle:
+              titilliumRegular.copyWith(color: Theme.of(context).hintColor),
           errorStyle: TextStyle(height: 1.5),
           border: InputBorder.none,
         ),

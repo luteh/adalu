@@ -3,7 +3,6 @@ import 'package:flutter_rekret_ecommerce/data/model/body/order_place_model.dart'
 import 'package:flutter_rekret_ecommerce/data/model/response/base/api_response.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/coupon_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/product_model.dart';
-import 'package:flutter_rekret_ecommerce/data/repository/coupon_repo.dart';
 import 'package:flutter_rekret_ecommerce/data/repository/insurance_repo.dart';
 
 class InsuranceProvider extends ChangeNotifier {
@@ -18,25 +17,35 @@ class InsuranceProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<double> initCoupon(
-      String kota, String service, OrderPlaceModel orderPlaceModel) async {
+    String kota,
+    String service,
+    OrderPlaceModel orderPlaceModel,
+  ) async {
     _isLoading = true;
     notifyListeners();
     List<Cart> listCart = [];
     List<Variation> listVariation = [];
-    orderPlaceModel.cart.forEach((Cart cart) {
-      cart.variation.forEach((Variation variation) {
-        listVariation.add(variation.copyWith(type: 'Black'));
-      });
+    orderPlaceModel.cart.forEach(
+      (Cart cart) {
+        cart.variation.forEach(
+          (Variation variation) {
+            listVariation.add(variation.copyWith(type: 'Black'));
+          },
+        );
 
-      listCart.add(cart.copyWith(variant: 'Black', variation: listVariation));
-    });
+        listCart.add(cart.copyWith(variant: 'Black', variation: listVariation));
+      },
+    );
 
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['kota'] = kota;
     data['service'] = service;
     data['cart'] = listCart.map((v) => v.toJson()).toList();
 
+    print('data: $data');
+
     ApiResponse apiResponse = await insuranceRepo.getInsurance(data);
+    print(apiResponse.response);
     if (apiResponse.response != null &&
         apiResponse.response.toString() != '{}' &&
         apiResponse.response.statusCode == 200) {

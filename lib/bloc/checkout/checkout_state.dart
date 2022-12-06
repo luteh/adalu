@@ -11,16 +11,17 @@ class CheckoutState {
   final double couponVouher;
   final double insuranceAmount;
 
-  CheckoutState(
-      {this.paymentProcess,
-      this.serviceFee,
-      this.isLoading = false,
-      this.orderPlaceModel,
-      this.isPaymentProcess = false,
-      this.isPaymentError = false,
-      this.messagePaymentError,
-      this.couponVouher = 0,
-      this.insuranceAmount = 0});
+  CheckoutState({
+    this.paymentProcess,
+    this.serviceFee,
+    this.isLoading = false,
+    this.orderPlaceModel,
+    this.isPaymentProcess = false,
+    this.isPaymentError = false,
+    this.messagePaymentError,
+    this.couponVouher = 0,
+    this.insuranceAmount = 0,
+  });
 
   bool isServiceFeeLoaded() {
     return (this.serviceFee != null) ? true : false;
@@ -51,16 +52,17 @@ class CheckoutState {
     }
   }
 
-  CheckoutState copyWith(
-      {PaymentProcess paymentProcess,
-      ServiceFee serviceFee,
-      bool isLoading = false,
-      OrderPlaceModel orderPlaceModel,
-      bool isPaymentProcess = false,
-      bool isPaymentError = false,
-      String messagePaymentError,
-      double couponVouher,
-      double insuranceAmount}) {
+  CheckoutState copyWith({
+    PaymentProcess paymentProcess,
+    ServiceFee serviceFee,
+    bool isLoading = false,
+    OrderPlaceModel orderPlaceModel,
+    bool isPaymentProcess = false,
+    bool isPaymentError = false,
+    String messagePaymentError,
+    double couponVouher,
+    double insuranceAmount,
+  }) {
     return CheckoutState(
       paymentProcess: paymentProcess ?? this.paymentProcess,
       serviceFee: serviceFee,

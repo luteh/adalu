@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_rekret_ecommerce/helper/my_http_overrides.dart';
 import 'package:flutter_rekret_ecommerce/provider/insurance_provider.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/order/order_details_screen.dart';
 import 'package:flutter_rekret_ecommerce/provider/auth_provider.dart';
@@ -41,6 +44,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp();
   await di.init();
   final NotificationAppLaunchDetails notificationAppLaunchDetails =
@@ -49,43 +53,48 @@ Future<void> main() async {
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     _orderID = (notificationAppLaunchDetails.payload != null &&
             notificationAppLaunchDetails.payload.isNotEmpty)
-        ? int.parse(notificationAppLaunchDetails.payload)
+        ? int.parse(
+            notificationAppLaunchDetails.payload,
+          )
         : null;
   }
   await MyNotification.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<FlashDealProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<BrandProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<BannerProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<ProductDetailsProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<OnBoardingProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SellerProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CouponProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<InsuranceProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<OrderProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<NotificationProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<WishListProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CartProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<SupportTicketProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<LocalizationProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
-    ],
-    child: MyApp(orderId: _orderID),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<FlashDealProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<BrandProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<BannerProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.sl<ProductDetailsProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.sl<OnBoardingProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SellerProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CouponProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<InsuranceProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<OrderProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.sl<NotificationProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<WishListProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<CartProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.sl<SupportTicketProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.sl<LocalizationProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
+      ],
+      child: MyApp(orderId: _orderID),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -105,6 +114,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,
+      themeMode: ThemeMode.light,
       locale: Provider.of<LocalizationProvider>(context).locale,
       localizationsDelegates: [
         AppLocalization.delegate,

@@ -48,8 +48,12 @@ class PriceConverter {
     return calculatedAmount;
   }
 
-  static String percentageCalculation(BuildContext context, double price,
-      double discount, String discountType) {
+  static String percentageCalculation(
+    BuildContext context,
+    double price,
+    double discount,
+    String discountType,
+  ) {
     return '${(discountType == 'percent' || discountType == 'percentage') ? '$discount %' : convertPriceDiscount(context, discount)} OFF';
   }
 }
