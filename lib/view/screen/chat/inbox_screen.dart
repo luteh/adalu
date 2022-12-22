@@ -46,10 +46,13 @@ class InboxScreen extends StatelessWidget {
                 bottomLeft: Radius.circular(5),
                 bottomRight: Radius.circular(5)),
             child: Image.asset(
-              Images.toolbar_background, fit: BoxFit.fill, height: 90,
+              Images.toolbar_background,
+              fit: BoxFit.fill,
+              height: 110,
               width: double.infinity,
-              color: Colors
-                  .black, //Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
+              color: Provider.of<ThemeProvider>(context).darkTheme
+                  ? Colors.black
+                  : null,
             ),
           ),
           Container(
@@ -86,7 +89,7 @@ class InboxScreen extends StatelessWidget {
                     : Text(
                         getTranslated('inbox', context),
                         style: titilliumRegular.copyWith(
-                            fontSize: 20, color: ColorResources.WHITE),
+                            fontSize: 21, color: ColorResources.WHITE),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

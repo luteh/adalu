@@ -27,6 +27,8 @@ import 'package:flutter_rekret_ecommerce/view/screen/support/support_ticket_scre
 import 'package:flutter_rekret_ecommerce/view/screen/wishlist/wishlist_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/theme_provider.dart';
+
 class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -48,8 +50,9 @@ class MoreScreen extends StatelessWidget {
               Images.more_page_header,
               height: 150,
               fit: BoxFit.fill,
-              color: Colors
-                  .black, //Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
+              color: Provider.of<ThemeProvider>(context).darkTheme
+                  ? Colors.black
+                  : null,
             ),
           ),
 
@@ -88,7 +91,7 @@ class MoreScreen extends StatelessWidget {
                               child: Text(
                                   !isGuestMode
                                       ? profile.userInfoModel != null
-                                          ? '${profile.userInfoModel.fName} ${profile.userInfoModel.lName} lorem upasdasdas dsads'
+                                          ? '${profile.userInfoModel.fName} ${profile.userInfoModel.lName}'
                                           : 'Full Name'
                                       : 'Guest',
                                   style: titilliumRegular.copyWith(
