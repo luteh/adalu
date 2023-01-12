@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\firebase_messaging\\intermediates\\merged_res\\release\\values-nl\\values-nl.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/firebase_messaging/intermediates/incremental/mergeReleaseResources/merged.dir/values-nl/values-nl.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\10be127d90ae16f93d2626a23bd8593b\\transformed\\jetified-play-services-base-18.0.1\\res\\values-nl\\values.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/10be127d90ae16f93d2626a23bd8593b/transformed/jetified-play-services-base-18.0.1/res/values-nl/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-nl\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "138",
-                        "endOffsets": "333"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1080",
-                        "endColumns": "142",
-                        "endOffsets": "1218"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-nl\\values-nl.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-nl/values-nl.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -52,15 +35,32 @@
                         "startOffsets": "2357",
                         "endColumns": "100",
                         "endOffsets": "2453"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-nl/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "138",
+                        "endOffsets": "333"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1080",
+                        "endColumns": "142",
+                        "endOffsets": "1218"
                     }
                 }
             ]
         },
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\firebase_messaging\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-nl\\values-nl.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/firebase_messaging/intermediates/merged_res/release/values-nl/values-nl.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\10be127d90ae16f93d2626a23bd8593b\\transformed\\jetified-play-services-base-18.0.1\\res\\values-nl\\values.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/10be127d90ae16f93d2626a23bd8593b/transformed/jetified-play-services-base-18.0.1/res/values-nl/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -77,24 +77,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-nl\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "138",
-                        "endOffsets": "333"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1080",
-                        "endColumns": "142",
-                        "endOffsets": "1218"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-nl\\values-nl.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-nl/values-nl.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -108,6 +91,23 @@
                         "startOffsets": "2357",
                         "endColumns": "100",
                         "endOffsets": "2453"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-nl/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "138",
+                        "endOffsets": "333"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1080",
+                        "endColumns": "142",
+                        "endOffsets": "1218"
                     }
                 }
             ]

@@ -1,44 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\app\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-kk\\values-kk.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-kk/values-kk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\94fe30835d2e64f545b4a93fe31e317d\\transformed\\core-1.8.0\\res\\values-kk\\values-kk.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "29",
-                        "startColumns": "4",
-                        "startOffsets": "2976",
-                        "endColumns": "100",
-                        "endOffsets": "3072"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-kk\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "159",
-                        "endOffsets": "354"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1041",
-                        "endColumns": "163",
-                        "endOffsets": "1200"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\10be127d90ae16f93d2626a23bd8593b\\transformed\\jetified-play-services-base-18.0.1\\res\\values-kk\\values.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/10be127d90ae16f93d2626a23bd8593b/transformed/jetified-play-services-base-18.0.1/res/values-kk/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -55,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\88822539d05ba600e4d47c46f6e54d5c\\transformed\\jetified-exoplayer-core-2.18.1\\res\\values-kk\\values-kk.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/88822539d05ba600e4d47c46f6e54d5c/transformed/jetified-exoplayer-core-2.18.1/res/values-kk/values-kk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -69,6 +35,40 @@
                         "startOffsets": "2272,2337,2401,2469,2533,2618,2705,2802,2898",
                         "endColumns": "64,63,67,63,84,86,96,95,77",
                         "endOffsets": "2332,2396,2464,2528,2613,2700,2797,2893,2971"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-kk/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "159",
+                        "endOffsets": "354"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1041",
+                        "endColumns": "163",
+                        "endOffsets": "1200"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/94fe30835d2e64f545b4a93fe31e317d/transformed/core-1.8.0/res/values-kk/values-kk.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "29",
+                        "startColumns": "4",
+                        "startOffsets": "2976",
+                        "endColumns": "100",
+                        "endOffsets": "3072"
                     }
                 }
             ]

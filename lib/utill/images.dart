@@ -1,12 +1,14 @@
 class Images {
-  static const String splash_logo = 'assets/images/logo_splash.png';
+  // static const String splash_logo = 'assets/images/logo_splash.png';
   static const String more_filled_image = 'assets/images/more_filled.png';
-  static const String cart_arrow_down_image = 'assets/images/cart_arrow_down.png';
+  static const String cart_arrow_down_image =
+      'assets/images/cart_arrow_down.png';
   static const String cart_image = 'assets/images/cart.png';
   static const String home_image = 'assets/images/home.png';
-  static const String logo_image = 'assets/images/logo_oglo_white.png';
+  static const String logo_image = 'assets/images/logo_adalu_white.png';
   static const String logo_with_name_image = 'assets/images/logo_with_name.png';
-  static const String logo_with_with_name ='assets/images/logo_with_with_name.png';
+  static const String logo_with_with_name =
+      'assets/images/logo_with_with_name.png';
   static const String message_image = 'assets/images/message.png';
   static const String more_image = 'assets/images/more.png';
   static const String shopping_image = 'assets/images/shopping.png';
@@ -17,13 +19,15 @@ class Images {
   static const String filter_image = 'assets/images/filter.png';
   static const String fast_delivery = 'assets/images/fast_delivery.png';
   static const String delivery = 'assets/images/delivery.png';
-  static const String toolbar_background = 'assets/images/toolbar_background.jpg';
+  static const String toolbar_background =
+      'assets/images/toolbar_background.jpg';
   static const String EDIT_TWO = 'assets/images/edit_2.png';
   static const String CHAT = 'assets/images/chat.png';
   static const String chats = 'assets/images/chats.png';
   static const String help_center = 'assets/images/help_center.png';
   static const String language = 'assets/images/language.png';
-  static const String notification_filled = 'assets/images/notification_filled.png';
+  static const String notification_filled =
+      'assets/images/notification_filled.png';
   static const String notification = 'assets/images/notification.png';
   static const String offers = 'assets/images/offers.png';
   static const String preference = 'assets/images/preference.png';
@@ -44,4 +48,5 @@ class Images {
   static const String about_us = 'assets/images/about_us.png';
   static const String contact_us = 'assets/images/contact_us.png';
   static const String login = 'assets/images/login.png';
+  static const String logoallwhite = 'assets/images/logoallwhite.png';
 }

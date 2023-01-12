@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\firebase_core\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-en-rGB\\values-en-rGB.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/firebase_core/intermediates/merged_res/release/values-en-rGB/values-en-rGB.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-en-rGB\\values.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-en-rGB/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-en-rGB\\values-en-rGB.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-en-rGB/values-en-rGB.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -40,10 +40,10 @@
             ]
         },
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\firebase_core\\intermediates\\merged_res\\release\\values-en-rGB\\values-en-rGB.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/firebase_core/intermediates/incremental/mergeReleaseResources/merged.dir/values-en-rGB/values-en-rGB.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-en-rGB\\values.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-en-rGB/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -60,7 +60,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-en-rGB\\values-en-rGB.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-en-rGB/values-en-rGB.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\firebase_core\\intermediates\\merged_res\\release\\values-ru\\values-ru.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/firebase_core/intermediates/merged_res/release/values-ru/values-ru.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-ru\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "152",
-                        "endOffsets": "347"
-                    },
-                    "to": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "156",
-                        "endOffsets": "207"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-ru\\values-ru.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-ru/values-ru.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -35,32 +18,32 @@
                         "startOffsets": "212",
                         "endColumns": "100",
                         "endOffsets": "308"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-ru/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "152",
+                        "endOffsets": "347"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "156",
+                        "endOffsets": "207"
                     }
                 }
             ]
         },
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\firebase_core\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-ru\\values-ru.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/firebase_core/intermediates/incremental/mergeReleaseResources/merged.dir/values-ru/values-ru.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-ru\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "152",
-                        "endOffsets": "347"
-                    },
-                    "to": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "156",
-                        "endOffsets": "207"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-ru\\values-ru.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-ru/values-ru.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -74,6 +57,23 @@
                         "startOffsets": "212",
                         "endColumns": "100",
                         "endOffsets": "308"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-ru/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "152",
+                        "endOffsets": "347"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "156",
+                        "endOffsets": "207"
                     }
                 }
             ]

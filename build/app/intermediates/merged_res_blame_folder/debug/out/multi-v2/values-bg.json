@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-bg\\values-bg.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-bg/values-bg.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\10be127d90ae16f93d2626a23bd8593b\\transformed\\jetified-play-services-base-18.0.1\\res\\values-bg\\values.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/10be127d90ae16f93d2626a23bd8593b/transformed/jetified-play-services-base-18.0.1/res/values-bg/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -21,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\94fe30835d2e64f545b4a93fe31e317d\\transformed\\core-1.8.0\\res\\values-bg\\values-bg.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/023ea189b124a5ffa99fb7ebbf31c5bd/transformed/jetified-play-services-basement-18.1.0/res/values-bg/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "133",
+                        "endOffsets": "328"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1105",
+                        "endColumns": "137",
+                        "endOffsets": "1238"
+                    }
+                },
+                {
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/94fe30835d2e64f545b4a93fe31e317d/transformed/core-1.8.0/res/values-bg/values-bg.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -38,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\88822539d05ba600e4d47c46f6e54d5c\\transformed\\jetified-exoplayer-core-2.18.1\\res\\values-bg\\values-bg.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/88822539d05ba600e4d47c46f6e54d5c/transformed/jetified-exoplayer-core-2.18.1/res/values-bg/values-bg.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -52,23 +69,6 @@
                         "startOffsets": "2362,2433,2496,2560,2634,2712,2785,2882,2973",
                         "endColumns": "70,62,63,73,77,72,96,90,75",
                         "endOffsets": "2428,2491,2555,2629,2707,2780,2877,2968,3044"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\023ea189b124a5ffa99fb7ebbf31c5bd\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-bg\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "133",
-                        "endOffsets": "328"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1105",
-                        "endColumns": "137",
-                        "endOffsets": "1238"
                     }
                 }
             ]

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\webview_flutter_android\\intermediates\\merged_res\\release\\values-uk\\values-uk.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/webview_flutter_android/intermediates/incremental/mergeReleaseResources/merged.dir/values-uk/values-uk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-uk\\values-uk.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-uk/values-uk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "D:\\Project\\adalu-flutter\\build\\webview_flutter_android\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values-uk\\values-uk.xml",
+            "outputFile": "/Users/darmalin/Flutter APP/adalu-flutter/build/webview_flutter_android/intermediates/merged_res/release/values-uk/values-uk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-3\\61850d9f45e1108f9d4bd510ea6eee2d\\transformed\\core-1.6.0\\res\\values-uk\\values-uk.xml",
+                    "source": "/Users/darmalin/.gradle/caches/transforms-3/61850d9f45e1108f9d4bd510ea6eee2d/transformed/core-1.6.0/res/values-uk/values-uk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

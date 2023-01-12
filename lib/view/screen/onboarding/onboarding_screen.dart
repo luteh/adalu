@@ -93,9 +93,9 @@ class OnBoardingScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
                           gradient: LinearGradient(colors: [
-                            Colors.black, //Theme.of(context).primaryColor,
-                            Colors.black, //Theme.of(context).primaryColor,
-                            Colors.black, //Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
+                            Theme.of(context).primaryColor,
                           ])),
                       child: TextButton(
                         onPressed: () {

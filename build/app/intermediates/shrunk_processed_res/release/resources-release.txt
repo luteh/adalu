@@ -209,7 +209,7 @@ comparator
 android.media.metadata.DISPLAY_SUBTITLE
 .ac4
 .ac3
-?
+慶
 notification_ids
 MediaCodecVideoRenderer
 dev.flutter.pigeon.WebViewHostApi.get...
@@ -820,7 +820,7 @@ commit
 09
 /cmdline
 android.support.actionExtras
-?
+明
 OFF_SCREEN_PRERASTER
 messagingClientEvent
 telephoneNumberNational
@@ -851,7 +851,7 @@ clearkey:Laurl
 _decision
 1:
 com.google.android.exoplayer2.ext.av1...
-?
+昭
 Sun
 QuarterYears
 LOWER_CASE_WITH_DASHES
@@ -944,7 +944,7 @@ sCache
 downloads
 textservices
 Folklore
-??????????????????
+ปีก่อนคริสต์กาลที่
 creditCardExpirationYear
 android.support.v4.media.session.EXTR...
 SystemUiMode.leanBack
@@ -1189,7 +1189,7 @@ updateViewLayout
 CA
 CC
 Thu
-??
+明治
 mobileSubtype
 CD
 CE
@@ -2023,7 +2023,7 @@ com.google.android.clockwork.home.UPD...
 in
 projects/%s/installations
 index
-??
+慶応
 is
 it
 UNDECIDED
@@ -2058,7 +2058,7 @@ ka
 RIGHT
 NotificationCompat
 placeholderIntent
-??????????
+พุทธศักราช
 onDestroy
 IS_KEYBOARD_KEY
 personNameSuffix
@@ -2701,7 +2701,7 @@ Podcast
 DigitalZoomRatio
 ATTACH
 KFSOWI
-??
+平成
 WindowServer
 ActivityFilter
 common_google_play_services_sign_in_f...
@@ -2965,7 +2965,7 @@ primaryActivityName.className
 iconSource
 windowMetrics
 codecId
-??
+昭和
 bypassRender
 mAttachInfo
 sidecarCompat
@@ -3359,7 +3359,7 @@ getViewRootImpl
 TrackEncryptionBox
 delimiter
 enable
-??
+大正
 Centuries
 OMX.Exynos.AVC.Decoder.secure
 SATURDAY
@@ -3631,7 +3631,7 @@ grantedScopes
 TextInputAction.none
 secondaryActivityName.className
 Trance
-?
+大
 FileSource
 FocalLengthIn35mmFilm
 video/dv_hevc
@@ -4374,7 +4374,7 @@ C1604
 LoadTask
 channelDescription
 android.support.remoteInputs
-?
+平
 Dubstep
 kate
 handled
@@ -4413,7 +4413,7 @@ TextInputAction.previous
 Vocal
 OffsetTimeOriginal
 WorkSourceUtil
-?.?.
+พ.ศ.
 JGZ
 gcm.n.link_android
 kid
