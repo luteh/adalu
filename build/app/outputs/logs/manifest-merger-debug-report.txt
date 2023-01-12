@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 application
-INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:15:5-60:19
+INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:15:5-63:19
 MERGED from [:firebase_messaging] /Users/darmalin/Flutter APP/adalu-flutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-46:19
 MERGED from [:firebase_messaging] /Users/darmalin/Flutter APP/adalu-flutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-46:19
 MERGED from [:firebase_core] /Users/darmalin/Flutter APP/adalu-flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
@@ -50,11 +50,11 @@ MERGED from [com.jakewharton.threetenabp:threetenabp:1.2.3] /Users/darmalin/.gra
 	android:name
 		INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
-INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
-INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
-INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
-MERGED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
+ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
+MERGED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
 MERGED from [:firebase_messaging] /Users/darmalin/Flutter APP/adalu-flutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-48:12
 MERGED from [:firebase_core] /Users/darmalin/Flutter APP/adalu-flutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
 MERGED from [:image_picker_android] /Users/darmalin/Flutter APP/adalu-flutter/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
@@ -131,11 +131,11 @@ INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/debug/An
 		INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
+		ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
 		INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-61:12
+		ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:1-64:12
 		INJECTED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/darmalin/Flutter APP/adalu-flutter/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -447,9 +447,8 @@ ADDED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flut
 	android:name
 		ADDED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:14:19-103
 receiver#com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver
-ADDED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:15:9-22:20
-	android:name
-		ADDED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:15:19-107
+MERGED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:15:9-22:20
+MERGED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:15:9-22:20
 intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.MY_PACKAGE_REPLACED+action:name:android.intent.action.QUICKBOOT_POWERON+action:name:com.htc.intent.action.QUICKBOOT_POWERON
 ADDED from [:flutter_local_notifications] /Users/darmalin/Flutter APP/adalu-flutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-21:29
 action#android.intent.action.BOOT_COMPLETED
