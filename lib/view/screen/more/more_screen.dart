@@ -17,6 +17,7 @@ import 'package:flutter_rekret_ecommerce/view/screen/category/all_category_scree
 import 'package:flutter_rekret_ecommerce/view/screen/more/web_view_screen.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/more/widget/app_info_dialog.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/more/widget/sign_out_confirmation_dialog.dart';
+import 'package:flutter_rekret_ecommerce/view/screen/more/widget/remove_account_confirmation.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/notification/notification_screen.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/offer/offers_screen.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/order/order_screen.dart';
@@ -253,6 +254,25 @@ class MoreScreen extends StatelessWidget {
                     onTap: () => showAnimatedDialog(context, AppInfoDialog(),
                         isFlip: true),
                   ),
+
+                  isGuestMode
+                      ? SizedBox()
+                      : ListTile(
+                          leading: Icon(Icons.person_remove,
+                              color: ColorResources.getPrimary(context),
+                              size: 25),
+                          title: Text(
+                            'Remove Account',
+                            style: titilliumRegular.copyWith(
+                              fontSize: Dimensions.FONT_SIZE_LARGE,
+                            ),
+                          ),
+                          onTap: () => showAnimatedDialog(
+                            context,
+                            RemoveAccountConfirmation(),
+                            isFlip: true,
+                          ),
+                        ),
 
                   isGuestMode
                       ? SizedBox()

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/data/datasource/remote/dio/dio_client.dart';
 import 'package:flutter_rekret_ecommerce/data/datasource/remote/exception/api_error_handler.dart';
@@ -11,7 +13,8 @@ class ChatRepo {
 
   Future<ApiResponse> getChatList(String sellerID) async {
     try {
-      final response = await dioClient.get('${AppConstants.MESSAGES_URI}$sellerID');
+      final response =
+          await dioClient.get('${AppConstants.MESSAGES_URI}$sellerID');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -29,7 +32,8 @@ class ChatRepo {
 
   Future<ApiResponse> sendMessage(MessageBody messageBody) async {
     try {
-      final response = await dioClient.post(AppConstants.SEND_MESSAGE_URI, data: messageBody.toJson());
+      final response = await dioClient.post(AppConstants.SEND_MESSAGE_URI,
+          data: messageBody.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

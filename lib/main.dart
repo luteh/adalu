@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
       _locals.add(Locale(language.languageCode, language.countryCode));
     });
     return MaterialApp(
-      title: '6Valley',
+      title: 'adalu',
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -44,6 +45,7 @@ class AuthRepo {
       'password': data.password,
       'npwp_str': data.npwpStr,
       'company': data.company,
+      'address': data.address,
     });
 
     request.fields.addAll(_fields);
@@ -156,6 +158,15 @@ class AuthRepo {
     try {
       Response response = await dioClient
           .post(AppConstants.FORGET_PASSWORD_URI, data: {"email": email});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> RemoveAccount(String email) async {
+    try {
+      Response response = await dioClient.post(AppConstants.REMOVE_ACCOUNT_URI);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

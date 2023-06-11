@@ -26,12 +26,17 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>NSPhotoLibraryUsageDescription</string>
-    <key>NSCameraUsageDescription</key>
-    <string>NSCameraUsageDescription</string>
+
+	<!-- permissions -->
     <key>NSMicrophoneUsageDescription</key>
-    <string>NSMicrophoneUsageDescription</string>
+    <string>Allow Access For Call With Doctor.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access photo to upload your profile picture.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access camera to take your profile picture.</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

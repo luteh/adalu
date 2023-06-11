@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class AuthProvider with ChangeNotifier {
     http.StreamedResponse response = await authRepo.register(data, file);
     // print(response.statusCode)
     _isLoading = false;
-
+    debugPrint('${response}');
     if (response.statusCode == 200) {
       Map map = jsonDecode(await response.stream.bytesToString());
       String message = map['message'];
@@ -56,7 +57,8 @@ class AuthProvider with ChangeNotifier {
         backgroundColor: Colors.green,
       ));
     } else {
-      print('${response.statusCode} | ${response.reasonPhrase}');
+      inspect(response);
+      print('aaaaaa${response.statusCode} | ${response.reasonPhrase}');
       callback(false, 'Register Failed');
       responseModel = ResponseModel(
         '${response.statusCode} | ${response.reasonPhrase}',
@@ -160,6 +162,16 @@ class AuthProvider with ChangeNotifier {
 
   String getUserPassword() {
     return authRepo.getUserPassword() ?? "";
+  }
+
+  Future<void> RemoveAccount(BuildContext context) async {
+    ApiResponse apiResponse = await authRepo.RemoveAccount("");
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      return "ok";
+    } else {
+      ApiChecker.checkApi(context, apiResponse);
+    }
   }
 
   Future<ResponseModel> forgetPassword(String email) async {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_rekret_ecommerce/data/model/response/chat_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/dialog_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/seller_model.dart';
@@ -27,7 +29,9 @@ class ChatInfoModel {
 
   ChatInfoModel.fromJson(Map<String, dynamic> json) {
     _lastChat = json['last_chat'] != null
-        ? new LastChat.fromJson(json['last_chat'])
+        ? json['last_chat'].length > 0
+            ? new LastChat.fromJson(json['last_chat'])
+            : null
         : null;
     if (json['chat_list'] != null) {
       _chatList = [];
@@ -147,6 +151,7 @@ class LastChat {
     data['created_at'] = this._createdAt;
     data['updated_at'] = this._updatedAt;
     data['shop_id'] = this._shopId;
+
     return data;
   }
 }
@@ -164,6 +169,7 @@ class UniqueShops {
   String _createdAt;
   String _updatedAt;
   int _shopId;
+  int _unread;
   SellerModel _sellerInfo;
   Shop _shop;
 
@@ -180,6 +186,7 @@ class UniqueShops {
       String createdAt,
       String updatedAt,
       int shopId,
+      int unread,
       SellerModel sellerInfo,
       Shop shop}) {
     this._id = id;
@@ -194,6 +201,7 @@ class UniqueShops {
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;
     this._shopId = shopId;
+    this._unread = unread;
     this._sellerInfo = sellerInfo;
     this._shop = shop;
   }
@@ -210,6 +218,7 @@ class UniqueShops {
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
   int get shopId => _shopId;
+  int get unread => _unread;
   SellerModel get sellerInfo => _sellerInfo;
   Shop get shop => _shop;
 
@@ -226,6 +235,7 @@ class UniqueShops {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _shopId = json['shop_id'];
+    _unread = json['unread'];
     _sellerInfo = json['seller_info'] != null
         ? new SellerModel.fromJson(json['seller_info'])
         : null;
@@ -246,6 +256,7 @@ class UniqueShops {
     data['created_at'] = this._createdAt;
     data['updated_at'] = this._updatedAt;
     data['shop_id'] = this._shopId;
+    data['unread'] = this._unread;
     if (this._sellerInfo != null) {
       data['seller_info'] = this._sellerInfo.toJson();
     }

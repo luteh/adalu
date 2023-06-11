@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/seller_model.dart';
 import 'package:flutter_rekret_ecommerce/helper/date_converter.dart';
@@ -121,6 +123,7 @@ class InboxScreen extends StatelessWidget {
                   },
                   child: Consumer<ChatProvider>(
                     builder: (context, chat, child) {
+                      // inspect(chat);
                       return chat.chatInfoModel != null
                           ? chat.uniqueShopList.length != 0
                               ? ListView.builder(
@@ -135,38 +138,18 @@ class InboxScreen extends StatelessWidget {
                                             child: Container(
                                               color:
                                                   Theme.of(context).accentColor,
-                                              child: FadeInImage.assetNetwork(
-                                                placeholder: Images.placeholder,
-                                                fit: BoxFit.cover,
+                                              child: Image.asset(
+                                                context
+                                                        .read<ThemeProvider>()
+                                                        .darkTheme
+                                                    ? Images.logo_image
+                                                    : Images.logo_image,
                                                 height: 50,
                                                 width: 50,
-                                                image:
-                                                    '${Provider.of<SplashProvider>(context, listen: false).baseUrls.sellerImageUrl}'
-                                                    '/${chat.uniqueShopList[index].sellerInfo != null ? chat.uniqueShopList[index].sellerInfo : ''}',
-                                                imageErrorBuilder: (c, o, s) =>
-                                                    Image.asset(
-                                                        Images.placeholder,
-                                                        fit: BoxFit.cover,
-                                                        height: 50,
-                                                        width: 50),
                                               ),
                                             ),
                                           ),
                                           title: Text(
-                                            // chat.uniqueShopList[index]
-                                            //             .sellerInfo !=
-                                            //         null
-                                            //     ? chat.uniqueShopList[index]
-                                            //             .sellerInfo.fName ??
-                                            //         '' +
-                                            //             ' ' +
-                                            //             chat
-                                            //                 .uniqueShopList[
-                                            //                     index]
-                                            //                 .sellerInfo
-                                            //                 .lName ??
-                                            //         ''
-                                            //     : '',
                                             "Adalu Seller",
                                             style: titilliumSemiBold,
                                           ),
@@ -181,12 +164,6 @@ class InboxScreen extends StatelessWidget {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                    // DateConverter
-                                                    //     .isoStringToLocalTimeOnly(
-                                                    //         chat
-                                                    //             .uniqueShopList[
-                                                    //                 index]
-                                                    //             .createdAt),
                                                     chat.uniqueShopList[index]
                                                         .createdAt,
                                                     style: titilliumRegular
@@ -199,30 +176,39 @@ class InboxScreen extends StatelessWidget {
                                                             .uniqueShopList[
                                                                 index]
                                                             .sellerId
-                                                    ? Container(
-                                                        height: 20,
-                                                        width: 20,
-                                                        margin: EdgeInsets.only(
-                                                            top: Dimensions
-                                                                .PADDING_SIZE_SMALL),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color:
-                                                              Theme.of(context)
+                                                    ? chat.uniqueShopList[index]
+                                                                .unread >
+                                                            0
+                                                        ? Container(
+                                                            height: 20,
+                                                            width: 20,
+                                                            margin: EdgeInsets.only(
+                                                                top: Dimensions
+                                                                    .PADDING_SIZE_SMALL),
+                                                            alignment: Alignment
+                                                                .center,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: Theme.of(
+                                                                      context)
                                                                   .primaryColor,
-                                                        ),
-                                                        child: Text('1',
-                                                            style: titilliumSemiBold.copyWith(
-                                                                fontSize: Dimensions
-                                                                    .FONT_SIZE_EXTRA_SMALL,
-                                                                color:
-                                                                    ColorResources
+                                                            ),
+                                                            child: Text(
+                                                                chat
+                                                                    .uniqueShopList[
+                                                                        index]
+                                                                    .unread
+                                                                    .toString(),
+                                                                style: titilliumSemiBold.copyWith(
+                                                                    fontSize:
+                                                                        Dimensions
+                                                                            .FONT_SIZE_EXTRA_SMALL,
+                                                                    color: ColorResources
                                                                         .WHITE)),
-                                                      )
+                                                          )
+                                                        : SizedBox.shrink()
                                                     : SizedBox.shrink(),
                                               ]),
                                           onTap: () => Navigator.push(context,

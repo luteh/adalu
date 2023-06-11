@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -128,17 +129,16 @@ class _ChatScreenState extends State<ChatScreen> {
             ) : SizedBox.shrink(),*/
 
             SizedBox(
-              height: 70,
+              height: 100,
               child: Card(
                 color: Theme.of(context).accentColor,
                 shadowColor: Colors.grey[200],
                 elevation: 2,
                 margin: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
+                    borderRadius: BorderRadius.circular(15)),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.PADDING_SIZE_SMALL),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Row(children: [
                     Expanded(
                       child: DropdownSearch<String>(
@@ -152,13 +152,24 @@ class _ChatScreenState extends State<ChatScreen> {
                                   .isSendButtonActive) {
                             Provider.of<ChatProvider>(context, listen: false)
                                 .toggleSendButtonActivity();
+
+                            if (Provider.of<ChatProvider>(context,
+                                    listen: false)
+                                .isSendButtonActive) {
+                              MessageBody messageBody = MessageBody(
+                                  sellerId: widget.seller.id.toString(),
+                                  shopId: widget.seller.shop.id.toString(),
+                                  message: newText);
+                              Provider.of<ChatProvider>(context, listen: false)
+                                  .sendMessage(messageBody, context);
+                              // selectedValue = '';
+                            }
                           } else if (newText.isEmpty &&
                               Provider.of<ChatProvider>(context, listen: false)
                                   .isSendButtonActive) {
                             Provider.of<ChatProvider>(context, listen: false)
                                 .toggleSendButtonActivity();
                           }
-                          selectedValue = newText;
                         },
                         onFind: (text) async {
                           Map<String, String> requestHeaders = {
@@ -167,65 +178,31 @@ class _ChatScreenState extends State<ChatScreen> {
                           var response = await http.get(
                             Uri.parse(
                               AppConstants.BASE_URL +
-                                  AppConstants.CHAT_INFO_URI,
+                                  AppConstants.CHAT_DIALOG_BUYER,
                             ),
                             headers: requestHeaders,
                           );
+
                           if (response.statusCode != 200) {
                             return [];
                           }
-                          List allDialog = (json.decode(response.body)
-                              as Map<String, dynamic>)['dialog'];
+                          if (response.body == '[]') {
+                            return [];
+                          }
+
+                          List<dynamic> allDialog = json.decode(response.body);
                           List<String> allNameDialog = [];
 
-                          allDialog.forEach((element) {
-                            allNameDialog.add(element["chat_questions_text"]);
-                          });
+                          if (allDialog != null) {
+                            allDialog.forEach((element) {
+                              allNameDialog.add(element["chat_questions_text"]);
+                            });
+                          }
+
                           return allNameDialog;
                         },
                       ),
-                      // child: TextField(
-                      //   controller: _controller,
-                      //   style: titilliumRegular,
-                      //   keyboardType: TextInputType.multiline,
-                      //   maxLines: null,
-                      //   expands: true,
-                      //   decoration: InputDecoration(
-                      //     hintText: 'Type here...',
-                      //     hintStyle: titilliumRegular.copyWith(
-                      //         color: ColorResources.HINT_TEXT_COLOR),
-                      //     border: InputBorder.none,
-                      //   ),
-                      //   onChanged: (String newText) {
-                      //   if (newText.isNotEmpty &&
-                      //       !Provider.of<ChatProvider>(context, listen: false)
-                      //           .isSendButtonActive) {
-                      //     Provider.of<ChatProvider>(context, listen: false)
-                      //         .toggleSendButtonActivity();
-                      //   } else if (newText.isEmpty &&
-                      //       Provider.of<ChatProvider>(context, listen: false)
-                      //           .isSendButtonActive) {
-                      //     Provider.of<ChatProvider>(context, listen: false)
-                      //         .toggleSendButtonActivity();
-                      //   }
-                      // },
-                      // ),
                     ),
-                    /*InkWell(
-                      onTap: () async {
-                        final PickedFile pickedFile = await picker.getImage(source: ImageSource.gallery);
-                        if (pickedFile != null) {
-                          Provider.of<ChatProvider>(context, listen: false).setImage(File(pickedFile.path));
-                        } else {
-                          print('No image selected.');
-                        }
-                      },
-                      child: Icon(Icons.image, color: ColorResources.HINT_TEXT_COLOR, size: Dimensions.ICON_SIZE_DEFAULT),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL, horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                      child: VerticalDivider(width: 2, color: ColorResources.CHAT_ICON_COLOR),
-                    ),*/
                     InkWell(
                       onTap: () {
                         if (Provider.of<ChatProvider>(context, listen: false)

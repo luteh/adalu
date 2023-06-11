@@ -30,6 +30,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   TextEditingController _confirmPasswordController = TextEditingController();
   TextEditingController _npwpStrController = TextEditingController();
   TextEditingController _companyController = TextEditingController();
+  TextEditingController _npwpAddressController = TextEditingController();
   GlobalKey<FormState> _formKey;
 
   FocusNode _fNameFocus = FocusNode();
@@ -40,6 +41,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   FocusNode _passwordFocus = FocusNode();
   FocusNode _confirmPasswordFocus = FocusNode();
   FocusNode _companyFocus = FocusNode();
+  FocusNode _npwpAddressFocus = FocusNode();
 
   RegisterModel register = RegisterModel();
   bool isEmailVerified = false;
@@ -56,6 +58,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       String _confirmPassword = _confirmPasswordController.text.trim();
       String _npwpStr = _npwpStrController.text.trim();
       String _company = _companyController.text.trim();
+      String _npwpAddress = _npwpAddressController.text.trim();
 
       if (_firstName.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -100,6 +103,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             backgroundColor: Colors.red,
           ),
         );
+      } else if (_npwpAddress.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Npwp Address is required'),
+            backgroundColor: Colors.red,
+          ),
+        );
       } else if (file == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -115,6 +125,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         register.password = _passwordController.text;
         register.npwpStr = _npwpStrController.text;
         register.company = _companyController.text;
+        register.address = _npwpAddressController.text;
 
         await context.read<AuthProvider>().register(
               context,
@@ -122,9 +133,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               file,
               route,
             );
-
-        // await Provider.of<AuthProvider>(context, listen: false)
-        //     .registration(register, route);
       }
     } else {
       isEmailVerified = false;
@@ -362,7 +370,25 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   textInputType: TextInputType.text,
                   hintText: "Enter Company",
                   focusNode: _companyFocus,
+                  nextNode: _npwpAddressFocus,
                   controller: _companyController,
+                  textInputAction: TextInputAction.done,
+                ),
+              ),
+
+              // NPWP Address
+              Container(
+                margin: EdgeInsets.only(
+                  left: Dimensions.MARGIN_SIZE_DEFAULT,
+                  right: Dimensions.MARGIN_SIZE_DEFAULT,
+                  top: Dimensions.MARGIN_SIZE_SMALL,
+                ),
+                child: CustomTextField(
+                  textInputType: TextInputType.multiline,
+                  maxLine: 3,
+                  hintText: "NPWP Address",
+                  focusNode: _npwpAddressFocus,
+                  controller: _npwpAddressController,
                   textInputAction: TextInputAction.done,
                 ),
               ),

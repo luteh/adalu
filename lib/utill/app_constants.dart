@@ -17,6 +17,7 @@ class AppConstants {
   static const String PRODUCT_REVIEW_URI = 'api/v1/products/reviews/';
   static const String SEARCH_URI = 'api/v1/products/search?name=';
   static const String CONFIG_URI = 'api/v1/config';
+  static const String REMOVE_ACCOUNT_URI = 'api/v1/customer/account_delete';
   static const String ADD_WISH_LIST_URI =
       'api/v1/customer/wish-list/add?product_id=';
   static const String REMOVE_WISH_LIST_URI =
@@ -54,6 +55,7 @@ class AppConstants {
   static const String COUPON_URI = 'api/v1/coupon/apply-voucher';
   static const String MESSAGES_URI = 'api/v1/customer/chat/messages?shop_id=';
   static const String CHAT_INFO_URI = 'api/v1/customer/chat';
+  static const String CHAT_DIALOG_BUYER = 'api/v1/customer/chat/dialog';
   static const String SEND_MESSAGE_URI = 'api/v1/customer/chat/send-message';
   static const String TOKEN_URI = 'api/v1/customer/cm-firebase-token';
   static const String NOTIFICATION_URI = 'api/v1/notifications';
