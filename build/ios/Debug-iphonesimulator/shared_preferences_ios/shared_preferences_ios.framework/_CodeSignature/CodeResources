@@ -18,7 +18,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		pw2iG3Aa1Nf5by959NBgOhNpVcM=
+		uYP/0k3lJTavwDwj5qnZ5KphP7M=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -29,6 +29,10 @@
 	<dict>
 		<key>Headers/FLTSharedPreferencesPlugin.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			pAxFZL6xT4Xsp/qlxTdbpBUHE7E=
+			</data>
 			<key>hash2</key>
 			<data>
 			+VEridcwqcNkt6aNXNQVOunNmgXcBA0ereU1u46adPc=
@@ -36,6 +40,10 @@
 		</dict>
 		<key>Headers/messages.g.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			KEECatYQZwXI1h39pM4sk0gg5s8=
+			</data>
 			<key>hash2</key>
 			<data>
 			P2AaqKZH/SF+NA5fa7T+XqaM2Qbv+/lncaJb2Z0N6nM=
@@ -43,6 +51,10 @@
 		</dict>
 		<key>Headers/shared_preferences_ios-umbrella.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			tH4C7NmWmIAFTU98ZaQZMEK3xQs=
+			</data>
 			<key>hash2</key>
 			<data>
 			qRq/45k9fY3A79u2N4k2PG3Euh6esxFQSRwJ9WTTOX8=
@@ -50,6 +62,10 @@
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			Y93E5q9Nhft+STfNOgdUrsfGHL8=
+			</data>
 			<key>hash2</key>
 			<data>
 			VvqQlZHAXXm5C3BNX+ttfZUuTAvzEFz+/JHtqxHchw0=
