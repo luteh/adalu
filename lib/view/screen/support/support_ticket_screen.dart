@@ -88,7 +88,7 @@ class SupportTicketScreen extends StatelessWidget {
                             backgroundColor: supportTicketList[index].status == 1 ? ColorResources.getGreen(context) : Theme.of(context).primaryColor,
                           ),
                           child: Text(
-                            supportTicketList[index].status == 0 ? getTranslated('pending', context) : getTranslated('solved', context),
+                            supportTicketList[index].status == '0' ? getTranslated('pending', context) : supportTicketList[index].status,
                             style: titilliumSemiBold.copyWith(color: Colors.white),
                           ),
                         ),

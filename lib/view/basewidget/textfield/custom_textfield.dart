@@ -26,23 +26,26 @@ class CustomTextField extends StatelessWidget {
   final bool readOnly;
   final Function onTap;
   final bool enable;
+  final Function(String value) onChanged;
 
-  CustomTextField(
-      {this.controller,
-      this.hintText,
-      this.textInputType,
-      this.maxLine,
-      this.focusNode,
-      this.nextNode,
-      this.textInputAction,
-      this.isPhoneNumber = false,
-      this.isValidator = false,
-      this.validatorMessage,
-      this.capitalization = TextCapitalization.none,
-      this.fillColor,
-      this.readOnly = false,
-      this.onTap,
-      this.enable = true});
+  CustomTextField({
+    this.controller,
+    this.hintText,
+    this.textInputType,
+    this.maxLine,
+    this.focusNode,
+    this.nextNode,
+    this.textInputAction,
+    this.isPhoneNumber = false,
+    this.isValidator = false,
+    this.validatorMessage,
+    this.capitalization = TextCapitalization.none,
+    this.fillColor,
+    this.readOnly = false,
+    this.onTap,
+    this.enable = true,
+    this.onChanged,
+  });
 
   @override
   Widget build(context) {
@@ -93,6 +96,7 @@ class CustomTextField extends StatelessWidget {
           }
           return null;
         },
+        onChanged: onChanged,
         decoration: InputDecoration(
           hintText: hintText ?? '',
           filled: fillColor != null,

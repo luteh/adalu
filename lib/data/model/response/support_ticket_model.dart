@@ -6,7 +6,7 @@ class SupportTicketModel {
   String _priority;
   String _description;
   String _reply;
-  int _status;
+  String _status;
   String _createdAt;
   String _updatedAt;
 
@@ -18,7 +18,7 @@ class SupportTicketModel {
         String priority,
         String description,
         String reply,
-        int status,
+        String status,
         String createdAt,
         String updatedAt}) {
     this._id = id;
@@ -40,7 +40,7 @@ class SupportTicketModel {
   String get priority => _priority;
   String get description => _description;
   String get reply => _reply;
-  int get status => _status;
+  String get status => _status;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
 
