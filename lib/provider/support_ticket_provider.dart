@@ -66,18 +66,16 @@ class SupportTicketProvider extends ChangeNotifier {
   }
 
   Future<void> getSupportTicketList(BuildContext context) async {
-    if (supportTicketList == null || supportTicketList.isEmpty) {
-      ApiResponse apiResponse = await supportTicketRepo.getSupportTicketList();
-      if (apiResponse.response != null &&
-          apiResponse.response.statusCode == 200) {
-        _supportTicketList = [];
-        apiResponse.response.data.forEach((supportTicket) =>
-            _supportTicketList.add(SupportTicketModel.fromJson(supportTicket)));
-      } else {
-        ApiChecker.checkApi(context, apiResponse);
-      }
-      notifyListeners();
+    ApiResponse apiResponse = await supportTicketRepo.getSupportTicketList();
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      _supportTicketList.clear();
+      apiResponse.response.data.forEach((supportTicket) =>
+          _supportTicketList.add(SupportTicketModel.fromJson(supportTicket)));
+    } else {
+      ApiChecker.checkApi(context, apiResponse);
     }
+    notifyListeners();
   }
 
   Future<void> getOrderDeliveredList(BuildContext context, String type) async {
