@@ -68,16 +68,24 @@ class ConversationSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          data.createdAt,
+                          data.userName,
                           style: titilliumRegular.copyWith(
-                            fontSize: 8,
-                            color: ColorResources.getHint(context),
+                            fontSize: Dimensions.FONT_SIZE_SMALL,
+                            fontWeight: FontWeight.bold,
+                            color: ColorResources.getSellerTxt(context),
                           ),
                         ),
                         Text(
                           data.message,
                           style: titilliumRegular.copyWith(
-                            fontSize: Dimensions.FONT_SIZE_SMALL,
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                          ),
+                        ),
+                        Text(
+                          data.createdAt,
+                          style: titilliumRegular.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                            color: ColorResources.getHint(context),
                           ),
                         ),
                       ],

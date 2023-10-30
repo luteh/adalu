@@ -23,6 +23,7 @@ class SupportTicketConvModel {
 
   bool get isMe => adminId == null;
   String get message => isMe ? customerMessage : adminMessage;
+  String get userName => isMe ? 'You' : 'Admin';
 
   factory SupportTicketConvModel.fromRawJson(String str) =>
       SupportTicketConvModel.fromJson(json.decode(str));

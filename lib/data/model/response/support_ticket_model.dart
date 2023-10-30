@@ -12,15 +12,15 @@ class SupportTicketModel {
 
   SupportTicketModel(
       {int id,
-        int customerId,
-        String subject,
-        String type,
-        String priority,
-        String description,
-        String reply,
-        String status,
-        String createdAt,
-        String updatedAt}) {
+      int customerId,
+      String subject,
+      String type,
+      String priority,
+      String description,
+      String reply,
+      String status,
+      String createdAt,
+      String updatedAt}) {
     this._id = id;
     this._customerId = customerId;
     this._subject = subject;
@@ -43,6 +43,7 @@ class SupportTicketModel {
   String get status => _status;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
+  int get orderId => int.tryParse(_subject) ?? 0;
 
   SupportTicketModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];

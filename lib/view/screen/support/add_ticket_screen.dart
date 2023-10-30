@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/model/body/support_ticket_body.dart';
+import '../../../di_container.dart';
 import '../../../localization/language_constrants.dart';
 import '../../../provider/support_ticket_provider.dart';
 import '../../../utill/color_resources.dart';
@@ -13,29 +14,37 @@ import '../../basewidget/show_custom_snakbar.dart';
 import '../../basewidget/textfield/custom_textfield.dart';
 import 'return_product_form.dart';
 
-class AddTicketScreen extends StatefulWidget {
+class AddTicketScreen extends StatelessWidget {
   final String type;
-  AddTicketScreen({@required this.type});
+  const AddTicketScreen({Key key, @required this.type}) : super(key: key);
 
   @override
-  _AddTicketScreenState createState() => _AddTicketScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) =>
+          sl<SupportTicketProvider>()..getOrderDeliveredList(context, type),
+      child: AddTicketView(
+        type: type,
+      ),
+    );
+  }
 }
 
-class _AddTicketScreenState extends State<AddTicketScreen> {
+class AddTicketView extends StatefulWidget {
+  final String type;
+  AddTicketView({@required this.type});
+
+  @override
+  _AddTicketViewState createState() => _AddTicketViewState();
+}
+
+class _AddTicketViewState extends State<AddTicketView> {
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final FocusNode _subjectNode = FocusNode();
   final FocusNode _descriptionNode = FocusNode();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
-
-  @override
-  void initState() {
-    super.initState();
-    context
-        .read<SupportTicketProvider>()
-        .getOrderDeliveredList(context, widget.type);
-  }
 
   @override
   void dispose() {

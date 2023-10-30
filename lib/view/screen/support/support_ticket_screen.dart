@@ -35,8 +35,11 @@ class SupportTicketView extends StatelessWidget {
       title: getTranslated('support_ticket', context),
       isGuestCheck: true,
       bottomChild: InkWell(
-        onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => IssueTypeScreen())),
+        onTap: () async {
+          await Navigator.push(
+              context, MaterialPageRoute(builder: (_) => IssueTypeScreen()));
+          context.read<SupportTicketProvider>().getSupportTicketList(context);
+        },
         child: Material(
           color: ColorResources.getColombiaBlue(context),
           elevation: 5,

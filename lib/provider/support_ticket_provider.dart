@@ -15,7 +15,7 @@ class SupportTicketProvider extends ChangeNotifier {
   final SupportTicketRepo supportTicketRepo;
   SupportTicketProvider({@required this.supportTicketRepo});
 
-  List<SupportTicketModel> _supportTicketList;
+  List<SupportTicketModel> _supportTicketList = [];
   bool _isLoading = false;
 
   List<SupportTicketModel> get supportTicketList => _supportTicketList;

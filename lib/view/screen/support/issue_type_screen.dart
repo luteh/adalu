@@ -1,21 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_rekret_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_rekret_ecommerce/utill/color_resources.dart';
-import 'package:flutter_rekret_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
-import 'package:flutter_rekret_ecommerce/view/basewidget/custom_expanded_app_bar.dart';
-import 'package:flutter_rekret_ecommerce/view/screen/support/add_ticket_screen.dart';
+import '../../../localization/language_constrants.dart';
+import '../../../utill/color_resources.dart';
+import '../../../utill/custom_themes.dart';
+import '../../../utill/dimensions.dart';
+import '../../basewidget/custom_expanded_app_bar.dart';
+import 'add_ticket_screen.dart';
 
 class IssueTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> issueTypeList = [
-      'Website Problem',
-      'Partner request',
       'Complaint',
-      'Info inquiry',
       'Return',
     ];
 
