@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/data/model/body/order_place_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/base/api_response.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/cart_model.dart';
@@ -67,63 +68,77 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   }
 
   Stream<CheckoutState> _processPaymentEvent() async* {
-    yield state.copyWith(
-      isPaymentProcess: true,
-      serviceFee: state.serviceFee,
-      orderPlaceModel: state.orderPlaceModel,
-    );
-    List<Cart> listCart = [];
-    List<Variation> listVariation = [];
-    state.orderPlaceModel.cart.forEach(
-      (Cart cart) {
-        cart.variation.forEach(
-          (Variation variation) {
-            listVariation.add(
-              variation.copyWith(type: 'Black'),
-            );
-          },
-        );
+    try {
+      yield state.copyWith(
+        isPaymentProcess: true,
+        serviceFee: state.serviceFee,
+        orderPlaceModel: state.orderPlaceModel,
+      );
+      List<Cart> listCart = [];
+      List<Variation> listVariation = [];
+      state.orderPlaceModel.cart.forEach(
+        (Cart cart) {
+          cart.variation.forEach(
+            (Variation variation) {
+              listVariation.add(
+                variation.copyWith(type: 'Black'),
+              );
+            },
+          );
 
-        listCart.add(cart.copyWith(variant: 'Black', variation: listVariation));
-      },
-    );
+          listCart
+              .add(cart.copyWith(variant: 'Black', variation: listVariation));
+        },
+      );
 
-    Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cart'] = listCart.map((v) => v.toJson()).toList();
-    data['coupon_discount'] = state.orderPlaceModel.discount;
-    data['address_id'] = state.orderPlaceModel.customerInfo.addressId;
-    data['courier'] = state.orderPlaceModel.courier.serviceTypeCode;
-    data['shipping_code'] = state.orderPlaceModel.courier.serviceTypeCode;
-    data['shipping_name'] =
-        "${state.orderPlaceModel.courier.serviceTypeName} - ${state.orderPlaceModel.serviceCourier.serviceDesc}"; //state.orderPlaceModel.serviceCourier.service;
-    data['total_shipment_fee'] = state.serviceFee.shipmentNominal.toString();
-    data['insurance'] = state.insuranceAmount;
+      Map<String, dynamic> data = new Map<String, dynamic>();
+      data['cart'] = listCart.map((v) => v.toJson()).toList();
+      data['coupon_discount'] = state.orderPlaceModel.discount;
+      data['address_id'] = state.orderPlaceModel.customerInfo.addressId;
+      data['courier'] = state.orderPlaceModel.courier.serviceTypeCode;
+      data['shipping_code'] = state.orderPlaceModel.courier.serviceTypeCode;
+      data['shipping_name'] =
+          "${state.orderPlaceModel.courier.serviceTypeName} - ${state.orderPlaceModel.serviceCourier.serviceDesc}"; //state.orderPlaceModel.serviceCourier.service;
+      data['total_shipment_fee'] = state.serviceFee.shipmentNominal.toString();
+      data['insurance'] = state.insuranceAmount;
 
-    print('payment data:  $data');
+      print('payment data:  $data');
 
-    ApiResponse apiResponse = await checkoutRepo.postPaymentProcess(data);
+      ApiResponse apiResponse = await checkoutRepo.postPaymentProcess(data);
 
-    if (apiResponse.response != null) {
-      PaymentProcess paymentProcess =
-          PaymentProcess.fromJson(apiResponse.response.data);
-      print('URL : ${paymentProcess.data}');
-      print('RESPONSE : ${apiResponse.toString()}');
+      if (apiResponse.response != null) {
+        PaymentProcess paymentProcess =
+            PaymentProcess.fromJson(apiResponse.response.data);
+        print('URL : ${paymentProcess.data}');
+        print('RESPONSE : ${apiResponse.toString()}');
 
-      /// TODO : Success
-      add(UpdateCheckoutEvent(
-          isPaymentProcess: false,
-          serviceFee: state.serviceFee,
-          paymentProcess: paymentProcess,
-          orderPlaceModel: state.orderPlaceModel));
-    } else {
-      add(
-        UpdateCheckoutEvent(
+        /// TODO : Success
+        add(UpdateCheckoutEvent(
             isPaymentProcess: false,
             serviceFee: state.serviceFee,
-            orderPlaceModel: state.orderPlaceModel,
-            isPaymentError: true,
-            messagePaymentError:
-                apiResponse.error.toString() ?? "Failed to proceed order"),
+            paymentProcess: paymentProcess,
+            orderPlaceModel: state.orderPlaceModel));
+      } else {
+        add(
+          UpdateCheckoutEvent(
+              isPaymentProcess: false,
+              serviceFee: state.serviceFee,
+              orderPlaceModel: state.orderPlaceModel,
+              isPaymentError: true,
+              messagePaymentError:
+                  apiResponse.error.toString() ?? "Failed to proceed order"),
+        );
+      }
+    } on Exception catch (e) {
+      debugPrint('_processPaymentEvent : $e');
+      add(
+        UpdateCheckoutEvent(
+          isPaymentProcess: false,
+          serviceFee: state.serviceFee,
+          orderPlaceModel: state.orderPlaceModel,
+          isPaymentError: true,
+          messagePaymentError: "Failed to proceed order",
+        ),
       );
     }
   }

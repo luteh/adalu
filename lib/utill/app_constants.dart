@@ -77,6 +77,7 @@ class AppConstants {
   static const String CONFIRM_STOCK_CUST = 'api/v1/mycart/confirmstockcust';
   static const String GENERATE_RESI = 'api/v1/mycart/generateresi';
   static const String GET_AWB = 'api/v1/mycart/getawb';
+  static const String DELETE_CART = 'api/v1/mycart/delete_cart';
 
   // sharePreference
   static const String TOKEN = 'token';

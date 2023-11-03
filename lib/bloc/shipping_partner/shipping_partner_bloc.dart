@@ -6,6 +6,7 @@ import 'package:flutter_rekret_ecommerce/data/model/response/address/city.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/address/district.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/address/province.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/base/api_response.dart';
+import 'package:flutter_rekret_ecommerce/data/model/response/cart_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/checkout/courier.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/checkout/service_courier.dart';
 import 'package:flutter_rekret_ecommerce/data/repository/shipping_partner_repo.dart';
@@ -65,9 +66,11 @@ class ShippingPartnerBloc
         courierSelected: event.courier,
         districtId: event.districtId);
 
-    ApiResponse response = await this
-        .shippingPartnerRepo
-        .getServiceCourier(event.courier.serviceTypeCode, event.districtId);
+    ApiResponse response = await this.shippingPartnerRepo.getServiceCourier(
+          event.courier.serviceTypeCode,
+          event.districtId,
+          event.cartList,
+        );
 
     if (response.response != null) {
       List<ServiceCourier> list =

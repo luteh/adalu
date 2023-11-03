@@ -13,20 +13,33 @@ import 'package:flutter_rekret_ecommerce/view/basewidget/animated_custom_dialog.
 import 'package:flutter_rekret_ecommerce/view/basewidget/custom_app_bar.dart';
 import 'package:flutter_rekret_ecommerce/view/basewidget/guest_dialog.dart';
 import 'package:flutter_rekret_ecommerce/view/basewidget/no_internet_screen.dart';
+import 'package:flutter_rekret_ecommerce/view/basewidget/show_custom_snakbar.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/cart/widget/cart_widget.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/checkout/checkout_screen.dart';
 import 'package:provider/provider.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   final bool fromCheckout;
   final List<CartModel> checkoutCartList;
   CartScreen({this.fromCheckout = false, this.checkoutCartList});
 
   @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    context.read<CartProvider>().getCartsRemote(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final provider = context.watch<CartProvider>();
     List<CartModel> cartList = [];
-    if (fromCheckout) {
-      cartList.addAll(checkoutCartList);
+    if (widget.fromCheckout) {
+      cartList.addAll(widget.checkoutCartList);
     } else {
       cartList.addAll(Provider.of<CartProvider>(context).cartList);
     }
@@ -54,7 +67,7 @@ class CartScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      bottomNavigationBar: !fromCheckout
+      bottomNavigationBar: !widget.fromCheckout
           ? Container(
               height: 70,
               padding: EdgeInsets.symmetric(
@@ -113,10 +126,14 @@ class CartScreen extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) => SizedBox(
-                      width: 80,
-                      height: 45,
+                      // width: 80,
+                      // height: 45,
                       child: TextButton(
                         onPressed: () {
+                          if (provider.isLoadingConfirmStock) {
+                            return;
+                          }
+
                           if (Provider.of<AuthProvider>(
                             context,
                             listen: false,
@@ -133,6 +150,36 @@ class CartScreen extends StatelessWidget {
                                   backgroundColor: Colors.red,
                                 ),
                               );
+                            }
+
+                            if (context
+                                .read<CartProvider>()
+                                .shouldConfirmStock) {
+                              context
+                                  .read<CartProvider>()
+                                  .confirmStock(context);
+                              return;
+                            }
+
+                            final anyStockOnConfirmation = context
+                                .read<CartProvider>()
+                                .anyStockOnConfirmation();
+
+                            if (anyStockOnConfirmation) {
+                              showCustomSnackBar(
+                                  'Stock Confirmation in Process', context);
+                              return;
+                            }
+
+                            final anyNotAvailableStock = context
+                                .read<CartProvider>()
+                                .anyNotAvailableStock();
+
+                            if (anyNotAvailableStock) {
+                              showCustomSnackBar(
+                                  'Cannot checkout out of stock product',
+                                  context);
+                              return;
                             }
 
                             context.read<CartProvider>().validCheckout();
@@ -155,43 +202,6 @@ class CartScreen extends StatelessWidget {
                                 ),
                               );
                             }
-
-                            // List<CartModel> cartList = [];
-                            // for (int i = 0;
-                            //     i <
-                            //         Provider.of<CartProvider>(
-                            //           context,
-                            //           listen: false,
-                            //         ).isSelectedList.length;
-                            //     i++) {
-                            //   if (Provider.of<CartProvider>(
-                            //     context,
-                            //     listen: false,
-                            //   ).isSelectedList[i]) {
-                            //     cartList.add(
-                            //       Provider.of<CartProvider>(
-                            //         context,
-                            //         listen: false,
-                            //       ).cartList[i],
-                            //     );
-                            //   }
-                            // }
-                            // if (cartList.length > 0) {
-                            //   Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (_) =>
-                            //           CheckoutScreen(cartList: cartList),
-                            //     ),
-                            //   );
-                            // } else {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(
-                            //       content: Text('Select at least one product.'),
-                            //       backgroundColor: Colors.red,
-                            //     ),
-                            //   );
-                            // }
                           } else {
                             showAnimatedDialog(
                               context,
@@ -206,12 +216,31 @@ class CartScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text(
-                          getTranslated('checkout', context),
-                          style: titilliumSemiBold.copyWith(
-                            fontSize: 13.0,
-                            color: ColorResources.getPrimary(context),
-                          ),
+                        child: Selector<CartProvider, bool>(
+                          selector: (context, provider) {
+                            return provider.shouldConfirmStock;
+                          },
+                          builder: (context, shouldConfirmStock, child) {
+                            if (provider.isLoadingConfirmStock) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+
+                            return Text(
+                              shouldConfirmStock
+                                  ? 'Confirm Stock'
+                                  : getTranslated('checkout', context),
+                              style: titilliumSemiBold.copyWith(
+                                fontSize: 13.0,
+                                color: ColorResources.getPrimary(context),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -296,41 +325,46 @@ class CartScreen extends StatelessWidget {
               ? Expanded(
                   child: Consumer<CartProvider>(
                     builder: (context, cartProvider, ___) {
-                      return ListView.builder(
-                        physics: ClampingScrollPhysics(),
-                        itemCount: cartProvider.cartItem.length,
-                        itemBuilder: (context, index) {
-                          CartM data = cartProvider.cartItem[index];
-                          return Container(
-                            padding: EdgeInsets.all(
-                              Dimensions.PADDING_SIZE_DEFAULT,
-                            ),
-                            margin: EdgeInsets.only(
-                              bottom: Dimensions.MARGIN_SIZE_DEFAULT,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).accentColor,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text('Adalu Seller'),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      child: Text('|'),
-                                    ),
-                                    Text(data.address)
-                                  ],
-                                ),
-                                Divider(),
-                                ListCartItem(cartItem: data.cartItem)
-                              ],
-                            ),
-                          );
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          cartProvider.refresh(context);
                         },
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemCount: cartProvider.cartItem.length,
+                          itemBuilder: (context, index) {
+                            CartM data = cartProvider.cartItem[index];
+                            return Container(
+                              padding: EdgeInsets.all(
+                                Dimensions.PADDING_SIZE_DEFAULT,
+                              ),
+                              margin: EdgeInsets.only(
+                                bottom: Dimensions.MARGIN_SIZE_DEFAULT,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).accentColor,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('Adalu Seller'),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        child: Text('|'),
+                                      ),
+                                      Text(data.address)
+                                    ],
+                                  ),
+                                  Divider(),
+                                  ListCartItem(cartItem: data.cartItem)
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       );
                     },
                   ),

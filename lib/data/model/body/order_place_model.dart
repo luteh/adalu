@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/address/district.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/checkout/courier.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/checkout/service_courier.dart';
@@ -213,10 +214,15 @@ class Cart {
     data['discount_type'] = this._discountType;
     data['shipping_method_id'] = this._shippingMethodId;
     data['variant'] = this._variant;
-    if (this._variation != null) {
-      if (this._variation.first != null) {
-        data['variations'] = this._variation.first.toJson();
-      } else {
+    if (this._variation != null && this._variation.isNotEmpty) {
+      try {
+        if (this._variation.first != null) {
+          data['variations'] = this._variation.first.toJson();
+        } else {
+          data['variations'] = {};
+        }
+      } on Exception catch (e) {
+        debugPrint('OrderPlaceModel toJson : $e');
         data['variations'] = {};
       }
     }

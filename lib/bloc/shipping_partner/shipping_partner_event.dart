@@ -33,8 +33,10 @@ class UpdateShippingPartnerEvent extends ShippingPartnerEvent {
 class SelectCourierShippingPartnerEvent extends ShippingPartnerEvent {
   final Courier courier;
   final String districtId;
+  final List<CartModel> cartList;
 
-  SelectCourierShippingPartnerEvent(this.courier, this.districtId);
+  SelectCourierShippingPartnerEvent(
+      this.courier, this.districtId, this.cartList);
 
   @override
   // TODO: implement props

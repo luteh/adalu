@@ -128,7 +128,7 @@ class ProductDetail {
         videoProvider: json["video_provider"],
         videoUrl: json["video_url"],
         colors: List<Color>.from(json["colors"].map((x) => Color.fromJson(x))),
-        variantProduct: json["variant_product"],
+        variantProduct: int.tryParse(json["variant_product"]) ?? 0,
         attributes: json['attributes'] != null
             ? List<String>.from(json["attributes"].map((x) => x))
             : [],
@@ -335,9 +335,9 @@ class Seller {
         email: json["email"],
         password: json["password"],
         status: json["status"],
-        fees: json["fees"],
+        fees: int.tryParse(json["fees"]) ?? 0,
         rememberToken: json["remember_token"],
-        recommended: json["recommended"],
+        recommended: int.tryParse(json["recommended"]) ?? 0,
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         bankName: json["bank_name"],
@@ -408,7 +408,7 @@ class Shop {
 
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
         id: json["id"],
-        sellerId: json["seller_id"],
+        sellerId: int.tryParse(json["seller_id"]) ?? 0,
         name: json["name"],
         address: json["address"],
         provinceCode: json["province_code"],

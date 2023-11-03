@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rekret_ecommerce/data/model/response/cart.dart';
-import 'package:flutter_rekret_ecommerce/data/model/response/cart_model.dart';
-import 'package:flutter_rekret_ecommerce/data/repository/cart_repo.dart';
+
+import '../data/model/response/base/api_response.dart';
+import '../data/model/response/cart.dart';
+import '../data/model/response/cart_model.dart';
+import '../data/model/response/new_cart_model.dart';
+import '../data/repository/cart_repo.dart';
+import '../helper/api_checker.dart';
+import 'package:collection/collection.dart';
 
 class CartProvider extends ChangeNotifier {
   final CartRepo cartRepo;
@@ -16,12 +21,57 @@ class CartProvider extends ChangeNotifier {
   double totalAmount = 0.0;
   int cartItemLength = 0;
 
+  bool isLoadingAddCartItem = false;
+  bool shouldConfirmStock = false;
+  bool isLoadingConfirmStock = false;
+  bool isLoadingDeleteCartItem = false;
+
   void getCartData() {
     cartItem.clear();
     cartItem.addAll(cartRepo.getCartList());
     cartItem.forEach((element) {
       cartItemLength = cartItemLength + element.cartItem.length;
     });
+  }
+
+  Future<void> getCartsRemote(BuildContext context) async {
+    ApiResponse apiResponse = await cartRepo.getCartListRemote();
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      apiResponse.response.data['cart'].forEach((item) {
+        final data = NewCartModel.fromJson(item);
+        final cart = CartModel(
+          data.id,
+          data.thumbnail,
+          data.name,
+          '',
+          data.price.toDouble(),
+          (data.price - data.discount).toDouble(),
+          data.quantity,
+          data.quantity,
+          data.variant,
+          null,
+          data.discount.toDouble(),
+          '',
+          data.tax.toDouble(),
+          '',
+          0,
+          data.statusConfirmation,
+          data.statusMsg,
+          data.quantityConfirmed,
+        );
+        _cartList.clear();
+        cartItem.clear();
+        cartRepo.clearCartList();
+        cartItemLength = 0;
+        selectedItem.clear();
+        totalAmount = 0;
+        addCartItem(context, cart, '');
+      });
+    } else {
+      ApiChecker.checkApi(context, apiResponse);
+    }
+    notifyListeners();
   }
 
   bool containSeller(List<CartM> cart, String seller) {
@@ -63,6 +113,39 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addCartItemRemote(BuildContext context, CartModel cart, String address,
+      Function callback) async {
+    final isProductExist =
+        cartItem.any((e) => e.cartItem.any((element) => element.id == cart.id));
+    if (isProductExist) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Item is already in the cart'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    isLoadingAddCartItem = true;
+    notifyListeners();
+
+    try {
+      ApiResponse apiResponse =
+          await cartRepo.addToCartListRemote(cart.id, cart.quantity);
+      if (apiResponse.response != null &&
+          apiResponse.response.statusCode == 200) {
+        await getCartsRemote(context);
+        callback?.call();
+      } else {
+        ApiChecker.checkApi(context, apiResponse);
+      }
+    } finally {
+      isLoadingAddCartItem = false;
+      notifyListeners();
+    }
+  }
+
   bool containProduct(List<CartM> cart, CartModel item) {
     return cart.any((element) => element.cartItem.contains(item));
   }
@@ -72,13 +155,15 @@ class CartProvider extends ChangeNotifier {
       if (selectedItem.contains(item)) {
         selectedItem.remove(item);
         totalAmount = totalAmount - (item.discountedPrice * item.quantity);
-
-        notifyListeners();
-        return;
+      } else {
+        selectedItem.add(item);
+        totalAmount = totalAmount + (item.discountedPrice * item.quantity);
       }
-      selectedItem.add(item);
-      totalAmount = totalAmount + (item.discountedPrice * item.quantity);
     }
+
+    final notConfirmedItem = selectedItem.firstWhereOrNull(
+        (element) => element.statusConfirmation == 'NOT_SUBMITED');
+    shouldConfirmStock = notConfirmedItem != null;
     notifyListeners();
   }
 
@@ -106,6 +191,26 @@ class CartProvider extends ChangeNotifier {
     }
     cartRepo.addToCartList(cartItem);
     notifyListeners();
+  }
+
+  void deleteItemRemote(BuildContext context, CartModel item) async {
+    isLoadingDeleteCartItem = true;
+    notifyListeners();
+
+    try {
+      final apiResponse = await cartRepo.deleteCart(item.id);
+
+      if (apiResponse.response != null &&
+          apiResponse.response.statusCode == 200) {
+        deleteItem(item);
+        getCartsRemote(context);
+      } else {
+        ApiChecker.checkApi(context, apiResponse);
+      }
+    } finally {
+      isLoadingDeleteCartItem = false;
+      notifyListeners();
+    }
   }
 
   void incrementQty(CartModel item) {
@@ -169,7 +274,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   bool validCheckout() {
-    bool valid;
+    bool valid = false;
     selectedItem.forEach((element) {
       if (element.seller.contains(selectedItem[0].seller)) {
         valid = true;
@@ -179,5 +284,37 @@ class CartProvider extends ChangeNotifier {
     });
 
     return valid;
+  }
+
+  void confirmStock(BuildContext context) async {
+    isLoadingConfirmStock = true;
+    notifyListeners();
+
+    final apiResponse = await cartRepo.confirmStock();
+
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      getCartsRemote(context);
+    } else {
+      ApiChecker.checkApi(context, apiResponse);
+    }
+
+    isLoadingConfirmStock = false;
+    notifyListeners();
+  }
+
+  void refresh(BuildContext context) {
+    getCartsRemote(context);
+  }
+
+  bool anyStockOnConfirmation() {
+    final anyStockOnConfirmation =
+        selectedItem.any((element) => element.statusConfirmation == 'REVIEW');
+    return anyStockOnConfirmation;
+  }
+  bool anyNotAvailableStock() {
+    final anyNotAvailableStock =
+        selectedItem.any((element) => element.statusConfirmation == 'NOT_AVAILABLE');
+    return anyNotAvailableStock;
   }
 }
