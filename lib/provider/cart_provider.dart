@@ -38,6 +38,12 @@ class CartProvider extends ChangeNotifier {
     ApiResponse apiResponse = await cartRepo.getCartListRemote();
     if (apiResponse.response != null &&
         apiResponse.response.statusCode == 200) {
+      _cartList.clear();
+      cartItem.clear();
+      cartRepo.clearCartList();
+      cartItemLength = 0;
+      selectedItem.clear();
+      totalAmount = 0;
       apiResponse.response.data['cart'].forEach((item) {
         final data = NewCartModel.fromJson(item);
         final cart = CartModel(
@@ -60,12 +66,6 @@ class CartProvider extends ChangeNotifier {
           data.statusMsg,
           data.quantityConfirmed,
         );
-        _cartList.clear();
-        cartItem.clear();
-        cartRepo.clearCartList();
-        cartItemLength = 0;
-        selectedItem.clear();
-        totalAmount = 0;
         addCartItem(context, cart, '');
       });
     } else {
@@ -312,9 +312,10 @@ class CartProvider extends ChangeNotifier {
         selectedItem.any((element) => element.statusConfirmation == 'REVIEW');
     return anyStockOnConfirmation;
   }
+
   bool anyNotAvailableStock() {
-    final anyNotAvailableStock =
-        selectedItem.any((element) => element.statusConfirmation == 'NOT_AVAILABLE');
+    final anyNotAvailableStock = selectedItem
+        .any((element) => element.statusConfirmation == 'NOT_AVAILABLE');
     return anyNotAvailableStock;
   }
 }
