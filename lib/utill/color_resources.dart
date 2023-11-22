@@ -34,7 +34,7 @@ class ColorResources {
   }
 
   static Color getRed(BuildContext context) {
-    return Provider.of<ThemeProvider>(context).darkTheme
+    return Provider.of<ThemeProvider>(context, listen: false).darkTheme
         ? Color(0xFF7a1c1c)
         : Color(0xFFD32F2F);
   }

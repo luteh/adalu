@@ -87,8 +87,6 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<CartProvider>()),
         ChangeNotifierProvider(
-            create: (context) => di.sl<SupportTicketProvider>()),
-        ChangeNotifierProvider(
             create: (context) => di.sl<LocalizationProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
       ],

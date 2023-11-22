@@ -9,6 +9,8 @@ import 'package:flutter_rekret_ecommerce/utill/custom_themes.dart';
 import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
 import 'package:flutter_rekret_ecommerce/view/screen/checkout/widget/radio_list_tile_service.dart';
 
+import '../../../../data/model/response/cart_model.dart';
+
 class ListTileCourier extends StatelessWidget {
   final Courier courier;
   final String subtitle;
@@ -16,14 +18,17 @@ class ListTileCourier extends StatelessWidget {
   final Widget serviceSelected;
   final ShippingPartnerBloc shippingPartnerBloc;
   final String districtId;
+  final List<CartModel> cartList;
 
-  ListTileCourier(
-      {@required this.courier,
-      @required this.subtitle,
-      @required this.isSelected,
-      this.serviceSelected,
-      @required this.shippingPartnerBloc,
-      @required this.districtId});
+  ListTileCourier({
+    @required this.courier,
+    @required this.subtitle,
+    @required this.isSelected,
+    this.serviceSelected,
+    @required this.shippingPartnerBloc,
+    @required this.districtId,
+    @required this.cartList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +37,8 @@ class ListTileCourier extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              shippingPartnerBloc
-                  .add(SelectCourierShippingPartnerEvent(courier, districtId));
+              shippingPartnerBloc.add(SelectCourierShippingPartnerEvent(
+                  courier, districtId, cartList));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -126,8 +131,11 @@ class ListTileCourier extends StatelessWidget {
     } else {
       return InkWell(
         onTap: () {
-          shippingPartnerBloc
-              .add(SelectCourierShippingPartnerEvent(courier, districtId));
+          shippingPartnerBloc.add(SelectCourierShippingPartnerEvent(
+            courier,
+            districtId,
+            cartList,
+          ));
         },
         child: Container(
           decoration: BoxDecoration(

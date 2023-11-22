@@ -1,7 +1,7 @@
 import 'package:flutter_rekret_ecommerce/data/model/response/language_model.dart';
 
 class AppConstants {
-  static const String BASE_URL = 'https://www.adalu.id/';
+  static const String BASE_URL = 'https://adak.rekret.site/';
   static const String BASE_URL_ASSETS = 'https://www.adalu.id';
   static const String USER_ID = 'userId';
   static const String NAME = 'name';
@@ -67,6 +67,17 @@ class AppConstants {
   static const String PAYMENT_PROCESS = 'api/v1/customer/area/payment_process';
   static const String TRACKING_ORDER = 'api/v1/area/track_order?order_id=';
   static const String INSURANCE = 'api/v1/customer/area/insurance_fee';
+  static const String ORDER_DELIVERED_LIST = 'api/v1/mycart/orderdeliveredlist';
+  static const String SUBMIT_TICKET_RETURN = 'api/v1/mycart/submitticketreturn';
+  static const String PICKUP_REQUEST = 'api/v1/mycart/pickuprequest';
+  static const String SUPPORT_TICKET_CONV = 'api/v1/customer/support-ticket/conv';
+  static const String SUPPORT_TICKET_COMMENT = 'api/v1/customer/support-ticket/comment';
+  static const String GET_CART = 'api/v1/mycart/get_cart';
+  static const String ADD_TO_TABLE_CART = 'api/v1/mycart/addtotablecart';
+  static const String CONFIRM_STOCK_CUST = 'api/v1/mycart/confirmstockcust';
+  static const String GENERATE_RESI = 'api/v1/mycart/generateresi';
+  static const String GET_AWB = 'api/v1/mycart/getawb';
+  static const String DELETE_CART = 'api/v1/mycart/delete_cart';
 
   // sharePreference
   static const String TOKEN = 'token';

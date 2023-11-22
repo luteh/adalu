@@ -1,22 +1,23 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_rekret_ecommerce/data/model/response/cart_model.dart';
-import 'package:flutter_rekret_ecommerce/data/model/response/product_model.dart';
-import 'package:flutter_rekret_ecommerce/helper/price_converter.dart';
-import 'package:flutter_rekret_ecommerce/localization/language_constrants.dart';
-import 'package:flutter_rekret_ecommerce/provider/cart_provider.dart';
-import 'package:flutter_rekret_ecommerce/provider/product_details_provider.dart';
-import 'package:flutter_rekret_ecommerce/provider/seller_provider.dart';
-import 'package:flutter_rekret_ecommerce/provider/splash_provider.dart';
-import 'package:flutter_rekret_ecommerce/provider/theme_provider.dart';
-import 'package:flutter_rekret_ecommerce/utill/color_resources.dart';
-import 'package:flutter_rekret_ecommerce/utill/custom_themes.dart';
-import 'package:flutter_rekret_ecommerce/utill/dimensions.dart';
-import 'package:flutter_rekret_ecommerce/utill/images.dart';
-import 'package:flutter_rekret_ecommerce/view/basewidget/button/custom_button.dart';
-import 'package:flutter_rekret_ecommerce/view/screen/checkout/checkout_screen.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../data/model/response/cart_model.dart';
+import '../../../../data/model/response/product_model.dart';
+import '../../../../helper/price_converter.dart';
+import '../../../../localization/language_constrants.dart';
+import '../../../../provider/cart_provider.dart';
+import '../../../../provider/product_details_provider.dart';
+import '../../../../provider/seller_provider.dart';
+import '../../../../provider/splash_provider.dart';
+import '../../../../provider/theme_provider.dart';
+import '../../../../utill/color_resources.dart';
+import '../../../../utill/custom_themes.dart';
+import '../../../../utill/dimensions.dart';
+import '../../../../utill/images.dart';
+import '../../../basewidget/button/custom_button.dart';
+import '../../checkout/checkout_screen.dart';
 
 class CartBottomSheet extends StatelessWidget {
   final Product product;
@@ -369,71 +370,95 @@ class CartBottomSheet extends StatelessWidget {
                   SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
                   // Cart button
-                  CustomButton(
-                    buttonText: getTranslated(
-                      _stock < 1
-                          ? 'out_of_stock'
-                          : isBuy
-                              ? 'buy_now'
-                              : 'add_to_cart',
-                      context,
-                    ),
-                    onTap: _stock < 1
-                        ? null
-                        : () {
-                            if (_stock > 0) {
-                              CartModel _cartModel = CartModel(
-                                product.id,
-                                product.thumbnail,
-                                product.name,
-                                product.addedBy == 'seller'
-                                    ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel.fName} '
-                                        '${Provider.of<SellerProvider>(context, listen: false).sellerModel.lName}'
-                                    : 'admin',
-                                price,
-                                priceWithDiscount,
-                                details.quantity,
-                                _stock,
-                                product.colors.length > 0
-                                    ? product.colors[details.variantIndex].name
-                                    : '',
-                                _variation,
-                                product.discount,
-                                product.discountType,
-                                product.tax,
-                                product.taxType,
-                                1,
-                              );
-                              Navigator.pop(context);
-                              if (isBuy) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => CheckoutScreen(
-                                      cartList: [_cartModel],
-                                      fromProductDetails: true,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                // Provider.of<CartProvider>(
-                                //   context,
-                                //   listen: false,
-                                // ).addToCart(_cartModel);
+                  Selector<CartProvider, bool>(
+                    selector: (context, provider) {
+                      return provider.isLoadingAddCartItem;
+                    },
+                    builder: (context, isLoadingAddCartItem, child) {
+                      if (isLoadingAddCartItem) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
 
-                                context.read<CartProvider>().addCartItem(
+                      return CustomButton(
+                        buttonText: getTranslated(
+                          _stock < 1
+                              ? 'out_of_stock'
+                              : isBuy
+                                  ? 'buy_now'
+                                  : 'add_to_cart',
+                          context,
+                        ),
+                        onTap: _stock < 1
+                            ? null
+                            : () {
+                                if (_stock > 0) {
+                                  CartModel _cartModel = CartModel(
+                                    product.id,
+                                    product.thumbnail,
+                                    product.name,
+                                    product.addedBy == 'seller'
+                                        ? '${Provider.of<SellerProvider>(context, listen: false).sellerModel.fName} '
+                                            '${Provider.of<SellerProvider>(context, listen: false).sellerModel.lName}'
+                                        : 'admin',
+                                    price,
+                                    priceWithDiscount,
+                                    details.quantity,
+                                    _stock,
+                                    product.colors.length > 0
+                                        ? product
+                                            .colors[details.variantIndex].name
+                                        : '',
+                                    _variation,
+                                    product.discount,
+                                    product.discountType,
+                                    product.tax,
+                                    product.taxType,
+                                    1,
+                                    'NOT_SUBMITED',
+                                    'Pending Stock Confirmation',
+                                    0,
+                                  );
+                                  Navigator.pop(context);
+                                  if (isBuy) {
+                                    Navigator.push(
                                       context,
-                                      _cartModel,
-                                      context
-                                          .read<ProductDetailsProvider>()
-                                          .product
-                                          .sellerExtra
-                                          .location,
+                                      MaterialPageRoute(
+                                        builder: (_) => CheckoutScreen(
+                                          cartList: [_cartModel],
+                                          fromProductDetails: true,
+                                        ),
+                                      ),
                                     );
-                                callback();
-                              }
-                            }
-                          },
+                                  } else {
+                                    // Provider.of<CartProvider>(
+                                    //   context,
+                                    //   listen: false,
+                                    // ).addToCart(_cartModel);
+
+                                    context.read<CartProvider>().addCartItemRemote(
+                                          context,
+                                          _cartModel,
+                                          context
+                                              .read<ProductDetailsProvider>()
+                                              .product
+                                              .sellerExtra
+                                              .location,
+                                              callback(),
+                                        );
+                                    // callback();
+                                    // context
+                                    //     .read<CartProvider>()
+                                    //     .addCartItemRemote(context, product.id,
+                                    //         details.quantity, onSuccess: () {
+                                    //   callback();
+                                    // });
+                                  }
+                                }
+                              },
+                      );
+                    },
                   ),
                 ],
               );

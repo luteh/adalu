@@ -15,8 +15,15 @@ class ProductDetailsRepo {
 
   Future<ApiResponse> getProduct(String productID, String languageCode) async {
     try {
-      final response = await dioClient.get(
-        AppConstants.PRODUCT_DETAILS_URI+productID, options: Options(headers: {AppConstants.LANG_KEY: languageCode}),
+      final dio = Dio(BaseOptions(
+        baseUrl: 'https://adakom.rekretgroup.com/',
+        headers: {
+          'authorization': 'Bearer ${dioClient.token}',
+        }
+      ));
+      final response = await dio.get(
+        AppConstants.PRODUCT_DETAILS_URI + productID,
+        options: Options(headers: {AppConstants.LANG_KEY: languageCode}),
       );
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -26,7 +33,8 @@ class ProductDetailsRepo {
 
   Future<ApiResponse> getReviews(String productID) async {
     try {
-      final response = await dioClient.get(AppConstants.PRODUCT_REVIEW_URI+productID);
+      final response =
+          await dioClient.get(AppConstants.PRODUCT_REVIEW_URI + productID);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -35,7 +43,8 @@ class ProductDetailsRepo {
 
   Future<ApiResponse> getCount(String productID) async {
     try {
-      final response = await dioClient.get(AppConstants.COUNTER_URI+productID);
+      final response =
+          await dioClient.get(AppConstants.COUNTER_URI + productID);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -44,18 +53,21 @@ class ProductDetailsRepo {
 
   Future<ApiResponse> getSharableLink(String productID) async {
     try {
-      final response = await dioClient.get(AppConstants.SOCIAL_LINK_URI+productID);
+      final response =
+          await dioClient.get(AppConstants.SOCIAL_LINK_URI + productID);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 
-  Future<http.StreamedResponse> submitReview(ReviewBody reviewBody, List<File> files, String token) async {
-    http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse('${AppConstants.BASE_URL}${AppConstants.SUBMIT_REVIEW_URI}'));
-    request.headers.addAll(<String,String>{'Authorization': 'Bearer $token'});
-    for(int index=0; index < 3; index++) {
-      if(files[index].path.isNotEmpty) {
+  Future<http.StreamedResponse> submitReview(
+      ReviewBody reviewBody, List<File> files, String token) async {
+    http.MultipartRequest request = http.MultipartRequest('POST',
+        Uri.parse('${AppConstants.BASE_URL}${AppConstants.SUBMIT_REVIEW_URI}'));
+    request.headers.addAll(<String, String>{'Authorization': 'Bearer $token'});
+    for (int index = 0; index < 3; index++) {
+      if (files[index].path.isNotEmpty) {
         request.files.add(http.MultipartFile(
           'fileUpload[$index]',
           files[index].readAsBytes().asStream(),
@@ -64,7 +76,11 @@ class ProductDetailsRepo {
         ));
       }
     }
-    request.fields.addAll(<String, String>{'product_id': reviewBody.productId, 'comment': reviewBody.comment, 'rating': reviewBody.rating});
+    request.fields.addAll(<String, String>{
+      'product_id': reviewBody.productId,
+      'comment': reviewBody.comment,
+      'rating': reviewBody.rating
+    });
     http.StreamedResponse response = await request.send();
     print(response.reasonPhrase);
     return response;

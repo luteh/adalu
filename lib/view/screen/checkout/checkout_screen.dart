@@ -265,12 +265,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 width: 80,
                                 height: 45,
                                 child: TextButton(
-                                  onPressed: (!checkoutState.isLoading)
-                                      ? () async {
+                                  onPressed: 
+                                  // (!checkoutState.isLoading)
+                                  //     ? 
+                                      () async {
                                           buttonPressed(shippingPartnerState,
                                               checkoutState, _value);
-                                        }
-                                      : null,
+                                        },
+                                      // : null,
                                   style: TextButton.styleFrom(
                                     backgroundColor:
                                         Theme.of(context).accentColor,
@@ -488,6 +490,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               builder: (_) => ShippingPartnerScreen(
                                 shippingPartnerBloc,
                                 districtId,
+                                widget.cartList
                               ),
                             ),
                           );

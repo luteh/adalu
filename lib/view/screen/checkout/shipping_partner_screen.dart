@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rekret_ecommerce/bloc/shipping_partner/shipping_partner_bloc.dart';
+import 'package:flutter_rekret_ecommerce/data/model/response/cart_model.dart';
 import 'package:flutter_rekret_ecommerce/data/model/response/checkout/courier.dart';
 import 'package:flutter_rekret_ecommerce/localization/language_constrants.dart';
 import 'package:flutter_rekret_ecommerce/view/basewidget/button/custom_button.dart';
@@ -10,8 +11,10 @@ import 'package:flutter_rekret_ecommerce/view/screen/checkout/widget/list_tile_c
 class ShippingPartnerScreen extends StatefulWidget {
   final ShippingPartnerBloc shippingPartnerBloc;
   final String disrictId;
+  final List<CartModel> cartList;
 
-  ShippingPartnerScreen(this.shippingPartnerBloc, this.disrictId);
+  ShippingPartnerScreen(
+      this.shippingPartnerBloc, this.disrictId, this.cartList);
 
   @override
   _ShippingPartnerScreenState createState() => _ShippingPartnerScreenState();
@@ -48,11 +51,13 @@ class _ShippingPartnerScreenState extends State<ShippingPartnerScreen> {
                               : false;
 
                       return ListTileCourier(
-                          courier: courier,
-                          subtitle: "Please choose service courier",
-                          isSelected: isSelected,
-                          shippingPartnerBloc: widget.shippingPartnerBloc,
-                          districtId: widget.disrictId);
+                        courier: courier,
+                        subtitle: "Please choose service courier",
+                        isSelected: isSelected,
+                        shippingPartnerBloc: widget.shippingPartnerBloc,
+                        districtId: widget.disrictId,
+                        cartList: widget.cartList,
+                      );
                     },
                   ),
                 ),

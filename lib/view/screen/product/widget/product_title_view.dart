@@ -161,12 +161,15 @@ class ProductTitleView extends StatelessWidget {
                                       ),
                                     )
                                   : Container(),
-                      Text(
-                        productModel.name ?? '',
-                        style: titilliumSemiBold.copyWith(
-                          fontSize: Dimensions.FONT_SIZE_LARGE,
+                      Expanded(
+                        child: Text(
+                          productModel.name ?? '',
+                          style: titilliumSemiBold.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_LARGE,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 2,
                       ),
                     ],
                   ),

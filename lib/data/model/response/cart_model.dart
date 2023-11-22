@@ -16,6 +16,9 @@ class CartModel {
   double _tax;
   String _taxType;
   int _shippingMethodId;
+  String _statusConfirmation;
+  String _statusMsg;
+  int _quantityConfirmed;
 
   CartModel(
     this._id,
@@ -33,6 +36,9 @@ class CartModel {
     this._tax,
     this._taxType,
     this._shippingMethodId,
+    this._statusConfirmation,
+    this._statusMsg,
+    this._quantityConfirmed,
   );
 
   String get variant => _variant;
@@ -56,6 +62,9 @@ class CartModel {
   double get tax => _tax;
   String get taxType => _taxType;
   int get shippingMethodId => _shippingMethodId;
+  String get statusConfirmation => _statusConfirmation;
+  String get statusMsg => _statusMsg;
+  int get quantityConfirmed => _quantityConfirmed;
 
   double getCalculationUnitPrice() {
     double calculate = this.discountedPrice;
@@ -102,6 +111,9 @@ class CartModel {
     _tax = json['tax'];
     _taxType = json['tax_type'];
     _shippingMethodId = json['shipping_method_id'];
+    _statusConfirmation = json['status_confirmation'];
+    _statusMsg = json['status_msg'];
+    _quantityConfirmed = json['quantity_confirmed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -121,6 +133,9 @@ class CartModel {
     data['tax'] = this._tax;
     data['tax_type'] = this._taxType;
     data['shipping_method_id'] = this._shippingMethodId;
+    data['status_confirmation'] = this._statusConfirmation;
+    data['status_msg'] = this._statusMsg;
+    data['quantity_confirmed'] = this._quantityConfirmed;
     return data;
   }
 }

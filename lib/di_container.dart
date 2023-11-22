@@ -48,6 +48,7 @@ import 'package:flutter_rekret_ecommerce/provider/seller_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/splash_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/support_ticket_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/theme_provider.dart';
+import 'package:flutter_rekret_ecommerce/provider/ticket_detail_provider.dart';
 import 'package:flutter_rekret_ecommerce/provider/wishlist_provider.dart';
 import 'package:flutter_rekret_ecommerce/utill/app_constants.dart';
 import 'package:get_it/get_it.dart';
@@ -84,7 +85,10 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => ProfileRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => WishListRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => CartRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => CartRepo(
+        sharedPreferences: sl(),
+        dioClient: sl(),
+      ));
   sl.registerLazySingleton(
       () => SplashRepo(sharedPreferences: sl(), dioClient: sl()));
   sl.registerLazySingleton(() => SupportTicketRepo(dioClient: sl()));
@@ -117,6 +121,7 @@ Future<void> init() async {
   sl.registerFactory(() => SupportTicketProvider(supportTicketRepo: sl()));
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl()));
+  sl.registerFactory(() => TicketDetailProvider(sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
